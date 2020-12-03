@@ -1,0 +1,25 @@
+#MyShtraph #Auto{
+	background: #FFFFFF;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+	padding: 30px;
+	height: 100%;
+}
+#MyShtraph #Auto p{
+	font-size: 18px;
+	line-height: 28px;
+	margin-bottom: 10px;
+}
+#MyShtraph #Auto .numbWrapper {
+    margin: 0;
+    font: 20px 'Open Sans', sans-serif;
+    font-weight: 500;
+    padding: 3px 10px 3px 40px;
+    background: url(v_no.jpg) no-repeat 10px 5px;
+    height: 43px;
+    line-height: 33px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    display: inline-block;
+    text-transform: uppercase;
+}

@@ -1,0 +1,22 @@
+*{
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+	font-family: 'Roboto', sans-serif;
+}
+body{
+	background-color: #E0E0E0;
+}
+.bg-log{
+	background: #005395;
+}
+.c-p{
+	cursor: pointer;
+}
+
+.or-sm-1{
+	order: 1
+}
+.or-sm-2{
+	order: 2
+}

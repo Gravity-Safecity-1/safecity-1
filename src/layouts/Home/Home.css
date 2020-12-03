@@ -1,0 +1,75 @@
+#Home>div{
+	background: #FFFFFF;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+	padding: 25px
+}
+#Home>div select{
+	width: 60px
+}
+#Home>div .form-control{
+	border-color: rgba(0, 0, 0, 0.5);
+	font-size: 14px;
+	line-height: 16px;
+	color: rgba(0, 0, 0, 0.5);
+}
+#Home>div .custom-select{
+	border-color: rgba(0, 0, 0, 0.5);
+	font-size: 14px;
+	line-height: 16px;
+	color: rgba(0, 0, 0, 0.5);
+}
+#Home .t{
+	overflow-x: auto;
+}
+#Home thead{
+	background: #F6F7FB;
+	padding: 14px;
+}
+#Home thead tr th:first-child{
+	text-align: left;
+}
+#Home thead tr th{
+	font-size: 14px;
+	line-height: 16px;
+	border-bottom: 2px solid #E2E5E8;
+	border-top: 2px solid #E2E5E8;
+	text-align: center;
+}
+#Home tfoot th{
+	font-size: 14px;
+	line-height: 16px;
+	color: rgba(0, 0, 0, 0.5);
+	text-align: center;
+}
+#Home tfoot th:first-child{
+	text-align: left;
+}
+.shown p{
+	font-size: 14px;
+	line-height: 16px;
+	color: rgba(0, 0, 0, 0.5);
+	margin-bottom: 0px;
+}
+
+#pagination .page-link{
+	font-size: 12px;
+	line-height: 16px;
+	color: #B8B8B8;
+}
+#pagination .page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #005395;
+    border-color: #005395;
+}
+#pagination .page-link {
+	padding: 10px
+}
+.page-link:hover {
+    z-index: 2;
+    color: #0056b3 !important;
+    text-decoration: none;
+    background-color: #fafafa;
+    border-color: #dee2e6;
+}

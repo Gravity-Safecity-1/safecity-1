@@ -1,0 +1,169 @@
+#Header{
+	background-color: white;
+	padding-top: 5px;
+	padding-bottom: 5px; 
+}
+#Header .notification-wrapper .notification{
+	position: relative;
+}
+#Header .notification-wrapper .notification:hover .not_badge{
+	background: #C7383B;
+}
+#Header .notification-wrapper .notification:hover path{
+	stroke: #005395
+}
+#Header .notification-wrapper .notification .not_badge{
+	background: #FF484C;
+	border-radius: 100%;
+	color: white;
+	font-size: 12px;
+	line-height: 16px;
+	padding: 4px 8px;
+	position: absolute;
+	top: -16px;
+	right: -10px
+}
+
+
+
+#Header .user-wrapper{
+	position: relative;
+}
+#Header .user-wrapper .user{
+	position: relative;
+}
+#Header .user-wrapper .user .not_badge{
+	background: #7AD835;
+	border-radius: 100%;
+	color: white;
+	font-size: 12px;
+	line-height: 16px;
+	padding: 4px 8px;
+	position: absolute;
+	top: -16px;
+	right: -8px
+}
+#Header .user-wrapper .user:hover .not_badge{
+	background-color: #5DA629
+}
+
+#Header .user-wrapper #persDrop{
+	position: absolute;
+	background: #FFFFFF;
+	border: 1px solid #D9D9D9;
+	border-radius: 5px;
+	right: 0px;
+	top: 45px;
+	z-index: 8
+}
+
+#Header .user-wrapper #persDrop .admin{
+	padding: 13px 16px;
+	background: #005395;
+	border-top-right-radius: 5px;
+	border-top-left-radius: 5px;
+}
+#Header .user-wrapper #persDrop .admin span{
+	font-size: 16px;
+	line-height: 16px;
+	color: white
+}
+#Header .user-wrapper #persDrop .admin b{
+	position: absolute;
+	top: 0px;
+	right: 5px;
+	color: white;
+	font-size: 10px;
+	cursor: pointer;
+	display: inline-block;
+	padding: 2px
+}
+#Header .user-wrapper #persDrop .admin svg:hover path{
+	stroke: #ccc
+}
+#Header .user-wrapper #persDrop .adminlinks{
+	padding: 15px 21px 
+}
+#Header .user-wrapper #persDrop .adminlinks a{
+	display: block;
+	font-size: 16px;
+	line-height: 18px;
+	color: rgba(0, 0, 0, 0.5);
+}
+#Header .user-wrapper #persDrop .adminlinks a:hover{
+	color: #005395;
+	text-decoration: none;
+}
+#Header .user-wrapper #persDrop .adminlinks a:hover path{
+	stroke: #005395
+}
+#Header .user-wrapper #persDrop .adminlinks a span{
+	display: inline-block;
+	margin-left: 8px;
+}
+#Header .notification-wrapper{
+	position: relative;
+}
+#Header .notification-wrapper #natDrop{
+	position: absolute;
+	background: #FFFFFF;
+	border: 1px solid #D9D9D9;
+	border-radius: 5px;
+	right: 0px;
+	top: 45px;
+	z-index: 8;
+	min-width: 360px
+}	
+#Header .notification-wrapper #natDrop .natificationHeader{
+	background: #005395;
+	padding: 17px 20px;
+	color: white; 
+}
+#Header .notification-wrapper #natDrop .natificationHeader b{
+	position: absolute;
+	top: 0px;
+	right: 5px;
+	color: white;
+	font-size: 10px;
+	cursor: pointer;
+	display: inline-block;
+	padding: 2px
+}
+#Header .notification-wrapper #natDrop .natificationHeader h6{
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 16px;
+	cursor: pointer;
+	margin-bottom: 0px;
+}
+
+#Header .notification-wrapper #natDrop .natificationHeader span{
+	font-size: 12px;
+	line-height: 16px;
+	text-decoration-line: underline;
+	display: inline-block;
+	padding-right: 10px;
+	cursor: pointer;
+}
+#Header .notification-wrapper #natDrop .natificationHeader span:hover{
+	color: #ccc
+}
+#Header .notification-wrapper #natDrop .natificFooter{
+	text-align: center;
+	font-size: 12px;
+	line-height: 16px;
+	text-decoration-line: underline;
+	background: rgba(217, 229, 239, 0.5);
+	border-radius: 4px;
+	margin-bottom: 0px;
+	padding: 17px 0px;
+}
+#Header .notification-wrapper #natDrop .natificBody{
+	padding: 0px 20px;
+}
+#Header .notification-wrapper #natDrop .natificFooter a{
+	color: black
+}
+#Header .notification-wrapper #natDrop .natificFooter a:hover{
+	color: blue
+}

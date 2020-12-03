@@ -1,0 +1,17 @@
+#Header .notification-wrapper #natDrop .natificBody #nat-n img{
+	width: 42px;
+	height: 42px
+}
+#Header .notification-wrapper #natDrop .natificBody #nat-n h6{
+	margin-bottom: 0px;
+	font-size: 14px;
+	line-height: 20px;
+}
+#Header .notification-wrapper #natDrop .natificBody #nat-n h6>span{
+	color: rgba(0, 0, 0, 0.5);
+}
+#Header .notification-wrapper #natDrop .natificBody #nat-n small{
+	font-size: 9px;
+	line-height: 16px;
+	color: rgba(0, 0, 0, 0.5);
+}

@@ -1,0 +1,54 @@
+#LogIn{
+	background: #E0E0E0;
+	height: 100vh;
+	width: 100%;
+}
+#LogIn h1{
+	font-size: 25.4px;
+	line-height: 21px;
+}
+#LogIn form{
+	background: #FFFFFF;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+	padding: 40px
+}
+#LogIn form h2{
+	font-size: 20px;
+	line-height: 16px;
+	text-align: center;
+}
+#LogIn form input{
+	font-size: 14px;
+	line-height: 16px;
+	height: 35px
+}
+#LogIn form .custom-checkbox{
+	width: 22px;
+	height: 22px;
+	border: 2px solid #E9EAEC;
+}
+#LogIn form .login-check{
+	padding: 10px 0px;
+	font-size: 16px;
+	line-height: 16px;
+	color: white;
+	border-radius: 1000px
+}
+#LogIn form .login-check:hover{
+	background-color: #003C6E
+}
+#LogIn form p{
+	font-size: 16px;
+	line-height: 22px;
+	color: #AFB5BD;
+	text-align: center;
+	margin-top: 30px;
+}
+#LogIn form p a{
+	color: black
+}
+#LogIn form p a:hover{
+	text-decoration: none;
+	border-bottom: 1px solid black
+}

@@ -1,0 +1,42 @@
+#ImageShtraf{
+	height: 100vh;
+	background: #E0E0E0 ;
+	position: fixed;
+	width: 100%;
+	top: 0px;
+	left: 0px;
+	z-index: 20;
+}
+#ImageShtraf .ImageClose{
+	position: absolute;
+	right: 20px;
+	top: 30px;
+	display: inline-block;
+	z-index: 2;
+}
+#ImageShtraf .ImageClose svg:hover path{
+	stroke: #005395
+}
+#ImageShtraf .carousel-indicators li {
+	height: 5px;
+	background-color: rgba(0, 83, 149, 0.25);
+	width: 50px;
+	opacity: 1
+}
+#ImageShtraf .carousel-indicators .active{
+	background-color: #005395
+}
+.zoom60{
+	width: 200%;
+	height: 200%
+}
+#ImageShtraf .TransformComponent-module_container__3NwNd {
+	height: 100% !important;
+	overflow: inherit !important;
+}
+#ImageShtraf .TransformComponent-module_content__TZU5O{
+	height: 100% !important;
+}
+.transformScale2{
+	transform: scale(2);
+}

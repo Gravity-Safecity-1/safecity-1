@@ -1,0 +1,17 @@
+#MyShtraph #violetions tbody #ItemsShtaf p{
+	text-align: center;
+	font-size: 16px;
+	line-height: 18px;
+	color: rgba(0, 0, 0, 0.5);
+	margin-bottom: 0px;
+}
+#MyShtraph #violetions tbody #ItemsShtaf span{
+	font-size: 16px;
+	line-height: 18px;
+}
+#MyShtraph #violetions tbody #ItemsShtaf td{
+	vertical-align: middle;
+}
+#MyShtraph #violetions tbody #ItemsShtaf td svg{
+	cursor: pointer;
+}
