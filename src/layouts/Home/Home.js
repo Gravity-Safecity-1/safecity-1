@@ -2,16 +2,88 @@ import React, {useState, useEffect} from 'react';
 import './Home.css';
 import Layout from '../../components/Layout/Layout';
 import Items from './Items/Items';
-import api from '../../api/index'
+import api from '../../api/index';
+import ReactDatatable from '@ashvin27/react-datatable';
+import {NavLink} from "react-router-dom"
 
 function Home() {
 	const [Item, setItems] = useState([])
+	const [columns, setColumns] = useState([{
+    	    key: "Name",
+    	    text: "ФИО",
+    	    sortable: true
+    	},
+    	{
+    	    key: "VehiclePlate",
+    	    text: "НОМЕР АВТО",
+    	    sortable: true
+    	},
+    	{
+    	    key: "ThreeDay",
+    	    text: "3 ДНЯ",
+    	    sortable: true
+    	},
+    	{
+    	    key: "SevenDay",
+    	    text: "7 ДНЕЙ",
+    	    sortable: true
+    	},
+    	{
+    	    key: "NinetyDay",
+    	    text: "90 ДНЕЙ",
+    	    sortable: true
+    	},
+    	{
+    	    key: "Total",
+    	    text: "ВСЕГО",
+    	    sortable: true
+    	},
+        {
+            key: "SendSms",
+            text: "ОПОВЕЩЕНИЕ",
+            cell: () => {
+                return (
+                    <p className="mb-0 custom-control custom-switch">
+						<input  type="checkbox" className="custom-control-input" id={Math.floor(Math.random()*10)} />
+						<label className="custom-control-label" htmlFor={Math.floor(Math.random()*10)}></label>
+					</p>
+                );
+            }
+        },
+        {
+            key: "ID",
+            text: "",
+            cell: (key) => {
+                return (
+                    <NavLink to={`/my-shtraf/${key}`}>
+				    	<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z" stroke="#005395" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+							<path d="M17.5 17.5L13.875 13.875" stroke="#005395" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+						</svg>
+					</NavLink> 
+                );
+            }
+         }
+    ]);
+
+	const [config, setConfig] = useState({
+		page_size: 10,
+        length_menu: [10, 20, 50],
+        show_filter: true,
+        show_pagination: true,
+        pagination: 'advance',
+        button: {
+            excel: true,
+            print: true
+        }
+	})
 	useEffect(()=>{
 		api.get(`/customers`)
 			.then(res=>{
 				const customersArr = res.data.customers;
 				setItems(customersArr)	
-				console.log(Item)
+				console.log(Item);
+				columns.forEach(item => item.key === "ID" ? item.cell(item.ID): null)
 			})
 			.catch(rej=>{
 				
@@ -100,14 +172,21 @@ function Home() {
 										</nav>
 									</div>
 								</div>
+
 							</div>
+
 						</div>
+						<ReactDatatable
+			                config={config}
+			                records={Item}
+			                columns={columns}/>
 					</div>
 
 				)
 			}} />
-			</>
-			)
+			 
+		</>
+	)
 		
 }
 
