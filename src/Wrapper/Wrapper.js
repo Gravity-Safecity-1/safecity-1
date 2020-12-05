@@ -3,7 +3,7 @@ import './Wrapper.css';
 import LogIn from '../layouts/LogIn/LogIn';
 import Home from '../layouts/Home/Home';
 import MyShtraph from '../layouts/MyShtraph/MyShtraph';
-import ImageShtraf from './ImageShtraf/ImageShtraf';
+import ImageShtraf from '../components/ImageShtraf/ImageShtraf';
 import {Route, Switch,Redirect, Link} from 'react-router-dom'
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
 

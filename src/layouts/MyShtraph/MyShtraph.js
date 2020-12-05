@@ -8,18 +8,21 @@ import Status from './Status/Status';
 import Items from './Items/Items';
 import api from '../../api/index';
 import Layout from '../../components/Layout/Layout';
+import ImageShtraf from '../../components/ImageShtraf/ImageShtraf';
 
 const MyShtraph = ({id}) => {
 	const [filter, setFilter] = useState('all');
 	const [payment, setPayment] = useState('all');
 	const [status, setStatus] = useState('all');
-	const [itemsArr, setItemsArr] = useState([])
+	const [itemsArr, setItemsArr] = useState([]);
 	const [DriverEl, setDriverEl] = useState({
 		VehiclePlate: null,
 		name: null,
 		PhoneNo: null,
 		userImage: null,
-	})
+	});
+	const [imageStye, setImageStye] = useState("d-none");
+	const [IdImg, setIdImg] = useState(null);
 
 	useEffect(() => {
 		api.get(`/customer/${id}`)
@@ -39,14 +42,18 @@ const MyShtraph = ({id}) => {
 				})
 			})
 	}, [])
+	
 
 	let ItemsEl = itemsArr.map(item =>{
+		
 		return(
-			<Items url={item.VId} nameShtraf={item.VDescription} paymentStatus={item.IsPaid} statuses={item.ProcessStatus} key={item.ID}/>	
+			<Items onfoto={()=>setImageStye("")} idPer={()=> setIdImg(item.BId)} url={item.VId} nameShtraf={item.VDescription} paymentStatus={item.IsPaid} statuses={item.ProcessStatus} key={item.ID}/>	
 		)
 	})
+	console.log(IdImg)
 	return (
 		<>
+			<ImageShtraf idx={id} IDImage={IdImg} ImageShtrafClass={imageStye} onClose={()=>setImageStye("d-none")}/>
 			<Layout component={()=>{
 				return(
 					<div id="MyShtraph" className="col-md-10 my-4">

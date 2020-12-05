@@ -1,0 +1,6 @@
+#ImageShtraf #imgWrapperShtraf .tools{
+	position: absolute;
+	right: 20px;
+	z-index: 2;
+	top: -20px
+}
