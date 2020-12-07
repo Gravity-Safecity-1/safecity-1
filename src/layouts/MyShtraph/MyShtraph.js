@@ -14,6 +14,7 @@ const MyShtraph = ({id}) => {
 	const [filter, setFilter] = useState('all');
 	const [payment, setPayment] = useState('all');
 	const [status, setStatus] = useState('all');
+
 	const [itemsArr, setItemsArr] = useState([]);
 	const [DriverEl, setDriverEl] = useState({
 		VehiclePlate: null,
@@ -23,9 +24,10 @@ const MyShtraph = ({id}) => {
 	});
 	const [imageStye, setImageStye] = useState("d-none");
 	const [IdImg, setIdImg] = useState(null);
+	const [state, setState] = useState([])
 
 	useEffect(() => {
-		api.get(`/customer/${id}`)
+		api.get(`/customer/${id}?page=1&pagesize=500`)
 			.then(res =>{
 				let {violations,customer} = res.data;
 				let yearApiVersion = customer.Birthday;
@@ -33,6 +35,7 @@ const MyShtraph = ({id}) => {
 				let nowYear = new Date().getFullYear();
 				let bearthDayParse = parseInt(nowYear) - parseInt(bearthDay);
 				setItemsArr(violations)
+				setState(violations)
 				setDriverEl({
 					VehiclePlate: customer.VehiclePlate,
 					name: customer.Name,
@@ -43,6 +46,51 @@ const MyShtraph = ({id}) => {
 			})
 	}, [])
 	
+	useEffect(() => {
+		if(filter === "stopLine"){
+			const s = state.filter(item => item.VId === "1345" || item.VId === "1625");
+			setItemsArr(s)
+		}else if( filter === 'redColor'  ){
+			const s = state.filter(item => item.VId === "1302");
+			setItemsArr(s)
+		}else if(filter === 'line'){
+			const s = state.filter(item => item.VId === "1230");
+			setItemsArr(s)
+		}else if(filter === 'againts'){
+			const s = state.filter(item => item.VId === "1301");
+			setItemsArr(s)
+		}else{
+			setItemsArr(state)
+		}
+
+		
+	}, [filter])
+
+	useEffect(() => {
+		if(payment === 'yes'){
+			const s = state.filter(item => item.IsPaid === 1);
+			setItemsArr(s)
+		}else if(payment === 'no'){
+			const s = state.filter(item => item.IsPaid === 0);
+			setItemsArr(s)
+		}else{
+			setItemsArr(state)
+		}
+		
+	}, [payment])
+
+	useEffect(() => {
+		if(status === 'ver'){
+			const s = state.filter(item => item.IsPaid === 1);
+			setItemsArr(s)
+		}else if(status === 'notVer'){
+			const s = state.filter(item => item.IsPaid === 0);
+			setItemsArr(s)
+		}else{
+			setItemsArr(state)
+		}
+		console.log(status)
+	}, [status])
 
 	let ItemsEl = itemsArr.map(item =>{
 		
@@ -50,7 +98,6 @@ const MyShtraph = ({id}) => {
 			<Items onfoto={()=>setImageStye("")} idPer={()=> setIdImg(item.BId)} url={item.VId} nameShtraf={item.VDescription} paymentStatus={item.IsPaid} statuses={item.ProcessStatus} key={item.ID}/>	
 		)
 	})
-	console.log(IdImg)
 	return (
 		<>
 			<ImageShtraf idx={id} IDImage={IdImg} ImageShtrafClass={imageStye} onClose={()=>setImageStye("d-none")}/>
@@ -84,7 +131,7 @@ const MyShtraph = ({id}) => {
 											</div>
 										</div>
 										<div className="t mt-3">		
-											<table className="table w-100 mt-3 table-borderless ">
+											<table className="table w-100 table-bordered table-striped mt-3 ">
 											  	<thead>
 											    	<tr>
 											    	  	<th scope="col">ТИП НАРУШЕНИЯ</th>

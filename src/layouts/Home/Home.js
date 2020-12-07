@@ -99,7 +99,7 @@ function Home(props) {
         language: {
            length_menu: "Показать _MENU_ ",
            filter: "Поиск",
-           info: "Показано _START_ из _END_ of _TOTAL_ ",
+           info: "Показано от _START_ до _END_ из _TOTAL_ ",
            pagination: {
                first: "First",
                previous: <span>&#9668;</span>,
@@ -119,6 +119,7 @@ function Home(props) {
 				
 			})
 	},[])
+    
 
 	return (
 		<>
