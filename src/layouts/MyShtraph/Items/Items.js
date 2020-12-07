@@ -29,7 +29,7 @@ export default function Items({url,nameShtraf,paymentStatus,statuses, onfoto,idP
 				<p>{paymentStatus === 0? 'Нет': "Да"}</p>
 			</td>
 			<td>
-				<p>{statuses === 0? "В процессе": "Поддтверждён"}</p>
+				<p>{statuses === 1? "Поддтверждён": "В процессе" }</p>
 			</td>
 			<td>
 				<button onClick={idPer}  className="btn m-auto d-block text-center">

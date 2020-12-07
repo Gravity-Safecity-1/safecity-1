@@ -4,9 +4,12 @@ import Layout from '../../components/Layout/Layout';
 import api from '../../api/index';
 import ReactDatatable from '@ashvin27/react-datatable';
 import {withRouter} from 'react-router-dom';
+import Loader from '../../components/Loader/Loader';
 
 function Home(props) {
-	const [Item, setItems] = useState([])
+	const [Item, setItems] = useState([]);
+    const [load, setLoad] = useState('d-none');
+    const [isLoaded, setIsLoaded] = useState('');
 	const [columns, setColumns] = useState([{
     	    key: "Name",
     	    align: "center",
@@ -25,7 +28,7 @@ function Home(props) {
 			    	</div>
     	    	)
     	    }
-    	},//
+    	},
     	{
     	    key: "VehiclePlate",
     	    align: "center",
@@ -112,18 +115,21 @@ function Home(props) {
 		api.get(`/customers?page=1&pagesize=500`)
 			.then(res=>{
 				const customersArr = res.data.customers;
-				setItems(customersArr)	
-				columns.forEach(item => item.key === "ID" ? item.cell(item.ID): null)
+				setItems(customersArr);
+				columns.forEach(item => item.key === "ID" ? item.cell(item.ID): null);
+                setLoad('');
+                setIsLoaded('d-none')
 			})
 			.catch(rej=>{
 				
 			})
 	},[])
-    
+
 
 	return (
 		<>
-			<Layout component={() => {
+            <Loader className={isLoaded}/>
+			<Layout className={load} component={() => {
 				return (
 					<div className="col-md-10 mt-4 mb-4" id="Home">
 						<ReactDatatable

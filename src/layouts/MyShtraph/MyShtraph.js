@@ -8,6 +8,7 @@ import Status from './Status/Status';
 import Items from './Items/Items';
 import api from '../../api/index';
 import Layout from '../../components/Layout/Layout';
+import Loader from '../../components/Loader/Loader';
 import ImageShtraf from '../../components/ImageShtraf/ImageShtraf';
 
 const MyShtraph = ({id}) => {
@@ -24,16 +25,19 @@ const MyShtraph = ({id}) => {
 	});
 	const [imageStye, setImageStye] = useState("d-none");
 	const [IdImg, setIdImg] = useState(null);
-	const [state, setState] = useState([])
+	const [state, setState] = useState([]);
+	const [load, setLoad] = useState('d-none');
+	const [isLoaded, setIsLoaded] = useState('')
 
 	useEffect(() => {
 		api.get(`/customer/${id}?page=1&pagesize=500`)
 			.then(res =>{
-				let {violations,customer} = res.data;
-				let yearApiVersion = customer.Birthday;
-				let bearthDay = yearApiVersion.split("").slice(0,4).join("");
-				let nowYear = new Date().getFullYear();
-				let bearthDayParse = parseInt(nowYear) - parseInt(bearthDay);
+				let {violations,customer} = res.data,
+					yearApiVersion = customer.Birthday,
+					bearthDay = yearApiVersion.split("").slice(0,4).join(""),
+					nowYear = new Date().getFullYear(),
+					bearthDayParse = parseInt(nowYear) - parseInt(bearthDay);
+
 				setItemsArr(violations)
 				setState(violations)
 				setDriverEl({
@@ -43,6 +47,8 @@ const MyShtraph = ({id}) => {
 					Year: bearthDayParse,
 					userImage: customer.Image,
 				})
+				setLoad('');
+				setIsLoaded('d-none')
 			})
 	}, [])
 	
@@ -81,10 +87,10 @@ const MyShtraph = ({id}) => {
 
 	useEffect(() => {
 		if(status === 'ver'){
-			const s = state.filter(item => item.IsPaid === 1);
+			const s = state.filter(item => item.ProcessStatus == 1);
 			setItemsArr(s)
 		}else if(status === 'notVer'){
-			const s = state.filter(item => item.IsPaid === 0);
+			const s = state.filter(item => item.ProcessStatus > 1);
 			setItemsArr(s)
 		}else{
 			setItemsArr(state)
@@ -98,15 +104,19 @@ const MyShtraph = ({id}) => {
 			<Items onfoto={()=>setImageStye("")} idPer={()=> setIdImg(item.BId)} url={item.VId} nameShtraf={item.VDescription} paymentStatus={item.IsPaid} statuses={item.ProcessStatus} key={item.ID}/>	
 		)
 	})
+	const verSh = state.filter(item => item.ProcessStatus === 1).length;
+	const onVetSh = state.filter(item => item.ProcessStatus > 1).length;
+	const onPaydSH = state.filter(item => item.IsPaid === 1).length;
 	return (
 		<>
+			<Loader className={isLoaded}/>
 			<ImageShtraf idx={id} IDImage={IdImg} ImageShtrafClass={imageStye} onClose={()=>setImageStye("d-none")}/>
-			<Layout component={()=>{
+			<Layout className={load} component={()=>{
 				return(
 					<div id="MyShtraph" className="col-md-10 my-4">
 						<div>
 							<div className="row">
-								<Auto numberAuto={DriverEl.VehiclePlate}/>
+								<Auto numberAuto={DriverEl.VehiclePlate} paydStraf={onPaydSH} verShtraf={verSh} onVerShtraf={onVetSh}/>
 								<Driver name={DriverEl.name} userImage={DriverEl.userImage} year={DriverEl.Year} tel={DriverEl.PhoneNo}/>
 								<div className="col-12">
 									<div id="violetions" className="">
@@ -184,9 +194,8 @@ const MyShtraph = ({id}) => {
 						</div>
 					</div>
 				)
-			}}/>		
+			}}/>
 		</>
 	)
 }
 export default MyShtraph;
-// hello

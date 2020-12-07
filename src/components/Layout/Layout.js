@@ -4,12 +4,12 @@ import Menu from '../Menu/Menu';
 
 
 
-function Layout({ component }) {
+function Layout({ component, className }) {
 
     const Component = component;
 
     return (
-        <div>
+        <div className={className}>
             <Header />
             <div className="container-fluid">
                 <div className="row">

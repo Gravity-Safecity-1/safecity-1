@@ -1,0 +1,16 @@
+#Loader{
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#Loader .text-primary {
+    color: #007bff!important;
+}
+#Loader .spinner-border{
+	width: 5rem;
+	height: 5rem;
+	border-width: 0.5rem;
+}
