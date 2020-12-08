@@ -20,8 +20,6 @@ const ImageShtraf =(props)=>{
             .then(res=>{
                 const {violations} = res.data;
                 setViolations(violations.filter(item => item.BId === props.IDImage ));
-                
-
             })
     }, [])
     console.log(violation)

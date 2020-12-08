@@ -7,8 +7,6 @@ import {HOME} from '../../routes'
 import api from '../../api'
 import{setToken, setUser, removeToken, removeUser, } from '../../utils'
 
-
-
 const state = {
 	login: "",
 	password: "",
@@ -16,16 +14,10 @@ const state = {
 	warText: "",
 }
 
-
- function LogIn() {
+function LogIn() {
 	const [usr, setState]=useState(state)
-
-
 	removeToken()
 	removeUser()
-
-
-
 	const handleChange = evt =>{
 		const {name, value} = evt.target;
 		
@@ -63,7 +55,6 @@ const state = {
 			console.log("error =>", e);
 		}
 	}
-
 	const keyPress = (e)=>{
 		if(e.keyCode == 13){
 			handleSubmit()
@@ -99,7 +90,6 @@ const state = {
 			</div>
 		</div>
 	)
-
 }
 
 

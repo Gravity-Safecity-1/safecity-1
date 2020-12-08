@@ -4,15 +4,6 @@ import Natification from'./Natification/Natification';
 import {Link} from 'react-router-dom'
 
 const Header=()=>{
-	// state = {
-	// 	persDrop: false,
-	// 	natiDrop: false,
-	// 	NatificationArr: [
-	// 		{id: 1, src: "images/users/user.png", name: "Фарход", soName: "Азизов", shtrafName: "Проезд на красный цвет", time: 10},
-	// 		{id: 2, src: "images/users/user.png", name: "Фарход", soName: "Азизов", shtrafName: "Проезд на красный цвет", time: 20},
-	// 		{id: 3, src: "images/users/user.png", name: "Фарход", soName: "Азизов", shtrafName: "Проезд на красный цвет", time: 30},
-	// 	],
-	// }
 	const [persDrop, setPersDrop] = useState(false);
 	const [natiDrop, setNatiDrop] = useState(false);
 	const [NatificationArr, setNatificationArr] = useState([
@@ -36,7 +27,6 @@ const Header=()=>{
 		setNatiDrop(!natiDrop);
 		setPersDrop(false)
 	}
-	
 	let persDropStyle = "d-none";
 	let persNatStyle = "d-none";
 	let Natifications = NatificationArr.map(item=>{
