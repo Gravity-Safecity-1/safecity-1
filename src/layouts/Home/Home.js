@@ -137,7 +137,6 @@ function Home(props) {
 			                records={Item}
 			                columns={columns}/>
 					</div>
-
 				)
 			}} />
 			 

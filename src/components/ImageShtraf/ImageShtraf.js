@@ -19,7 +19,7 @@ const ImageShtraf =(props)=>{
         api.get(`/customer/${props.idx}`)
             .then(res=>{
                 const {violations} = res.data;
-                setViolations(violations.filter(item => item.BId === IDImage ));
+                setViolations(violations.filter(item => item.BId === props.IDImage ));
                 
 
             })

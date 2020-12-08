@@ -19,7 +19,13 @@
 	line-height: 16px;
 	color: rgba(0, 0, 0, 0.5);
 }
-#Home .t{
+
+#Home .table_filter, #Home .table_tools,#Home .asrt-page-length{
+	margin-top: 10px;
+	width: auto !important;
+}
+
+#Home .table-body.asrt-table-body{
 	overflow-x: auto;
 }
 #Home thead{

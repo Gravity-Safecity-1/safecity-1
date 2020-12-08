@@ -4,11 +4,9 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	background:;
 }
 
-#Loader .text-primary {
-    color: #007bff!important;
-}
 #Loader .spinner-border{
 	width: 5rem;
 	height: 5rem;
