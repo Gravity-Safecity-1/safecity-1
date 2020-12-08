@@ -43,15 +43,6 @@
 	text-align: center;
 	color: black
 }
-#Home tfoot th{
-	font-size: 14px;
-	line-height: 16px;
-	color: rgba(0, 0, 0, 0.5);
-	text-align: center;
-}
-#Home tfoot th:first-child{
-	text-align: left;
-}
 .shown p{
 	font-size: 14px;
 	line-height: 16px;

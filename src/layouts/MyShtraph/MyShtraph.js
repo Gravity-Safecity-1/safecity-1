@@ -153,14 +153,6 @@ const MyShtraph = ({id}) => {
 											    <tbody>
 											    	{ItemsEl}
 											    </tbody>
-											    <tfoot>
-											    	<tr>
-											    	  	<th scope="col">Тип нарушения</th>
-											    	  	<th scope="col">Оплата</th>
-											    	  	<th scope="col">СТАТУС</th>
-											    	  	<th scope="col">ФОТО</th>
-											    	</tr>
-											    </tfoot>
 											</table>
 										</div>
 										<div className="shown row d-flex justify-content-between">
