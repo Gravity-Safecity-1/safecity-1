@@ -30,7 +30,7 @@ const MyShtraph = ({id}) => {
 	const [load, setLoad] = useState('d-none');
 	const [isLoaded, setIsLoaded] = useState('');
 	const [currentPage, setCurrentPage] = useState(1)
-	const [postsPerPage] = useState(10)
+	const [postsPerPage] = useState(4)
 
 	useEffect(() => {
 		api.get(`/customer/${id}?page=1&pagesize=500`)
@@ -102,14 +102,18 @@ const MyShtraph = ({id}) => {
 	}, [status])
 
 	
+	//auto elements
 	const verSh = state.filter(item => item.ProcessStatus === 1).length;
 	const onVetSh = state.filter(item => item.ProcessStatus > 1).length;
 	const onPaydSH = state.filter(item => item.IsPaid === 1).length;
 
+	//paination
 	const indexOfLastPost = currentPage * postsPerPage;
 	const indexOfFirstPost = indexOfLastPost - postsPerPage; 
 	const currentPosts = itemsArr.slice(indexOfFirstPost, indexOfLastPost);
+	const pageN = Math.ceil(itemsArr.length/postsPerPage)
 	
+	// arr user shtraf
 	let ItemsEl = currentPosts.map(item =>{
 		return(
 			<Items onfoto={()=>setImageStye("")} idPer={()=> setIdImg(item.BId)} url={item.VId} nameShtraf={item.VDescription} paymentStatus={item.IsPaid} statuses={item.ProcessStatus} key={item.ID}/>	
@@ -173,11 +177,11 @@ const MyShtraph = ({id}) => {
 													<nav aria-label="...">
 													  	<ul className="pagination">
 													  	  	<li className="page-item ">
-													  	  	  	<a className="page-link" href="#" tabIndex="-1" aria-disabled="false">◄</a>
+													  	  	  	<button onClick={()=> currentPage > 1 ? setCurrentPage(currentPage-1): setCurrentPage(1)} className="page-link" >◄</button>
 													  	  	</li>
 													  	  	<Pagination cp={currentPage} paginate={ items => setCurrentPage(items)} postsPerPage={postsPerPage} totalPosts={itemsArr.length}/>
 													  	  	<li className="page-item">
-													  	  	  	<a className="page-link" href="#">►</a>
+													  	  	  	<button onClick={()=> currentPage < pageN ? setCurrentPage(currentPage+1): setCurrentPage(pageN)} className="page-link">►</button>
 													  	  	</li>
 													  	</ul>
 													</nav>

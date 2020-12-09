@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const Pagination =(props)=> {
 	const {postsPerPage, totalPosts, paginate, cp} = props;
