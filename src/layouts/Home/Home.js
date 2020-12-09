@@ -40,34 +40,58 @@ function Home(props) {
     	    key: "ThreeDay",
     	    align: "center",
     	    text: "3 ДНЯ",
-    	    sortable: true
+    	    sortable: true,
+            cell:(row)=>{
+                return(
+                    row.ThreeDay === 0 ? 0: row.ThreeDay
+                )
+            }
     	},
     	{
     	    key: "SevenDay",
     	    align: "center",
     	    text: "7 ДНЕЙ",
-    	    sortable: true
+    	    sortable: true,
+            cell:(row)=>{
+                return(
+                    row.SevenDay === 0 ? 0: row.SevenDay
+                )
+            }
     	},
     	{
     	    key: "NinetyDay",
     	    align: "center",
     	    text: "90 ДНЕЙ",
-    	    sortable: true
+    	    sortable: true,
+            cell:(row)=>{
+                return(
+                    row.NinetyDay === 0 ? 0: row.NinetyDay
+                )
+            }
     	},
     	{
     	    key: "Total",
     	    align: "center",
     	    text: "ВСЕГО",
-    	    sortable: true
+    	    sortable: true,
+            cell:(row)=>{
+                return(
+                    row.Total === 0 ? 0: row.Total
+                )
+            }
     	},
         {
             key: "SendSms",
             align: "center",
             text: "ОПОВЕЩЕНИЕ",
             cell: (row) => {
+                const onSwitch = event => {
+                    row.SendSms = 0;
+                    console.log(row.SendSms)
+                }
                 return (
                     <p className="mb-0 custom-control custom-switch">
-						<input type="checkbox" className="custom-control-input" id={row.ID} />
+						<input checked={row.SendSms === 1? true: false} onChange={onSwitch} type="checkbox" className="custom-control-input" id={row.ID} />
 						<label className="custom-control-label" htmlFor={row.ID}></label>
 					</p>
                 );

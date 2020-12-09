@@ -10,12 +10,12 @@ import api from '../../api/index';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
 import ImageShtraf from '../../components/ImageShtraf/ImageShtraf';
+import Pagination from '../../components/Pagination/Pagination';
 
 const MyShtraph = ({id}) => {
 	const [filter, setFilter] = useState('all');
 	const [payment, setPayment] = useState('all');
 	const [status, setStatus] = useState('all');
-
 	const [itemsArr, setItemsArr] = useState([]);
 	const [DriverEl, setDriverEl] = useState({
 		VehiclePlate: null,
@@ -26,8 +26,11 @@ const MyShtraph = ({id}) => {
 	const [imageStye, setImageStye] = useState("d-none");
 	const [IdImg, setIdImg] = useState(null);
 	const [state, setState] = useState([]);
+
 	const [load, setLoad] = useState('d-none');
-	const [isLoaded, setIsLoaded] = useState('')
+	const [isLoaded, setIsLoaded] = useState('');
+	const [currentPage, setCurrentPage] = useState(1)
+	const [postsPerPage] = useState(10)
 
 	useEffect(() => {
 		api.get(`/customer/${id}?page=1&pagesize=500`)
@@ -98,19 +101,25 @@ const MyShtraph = ({id}) => {
 		console.log(status)
 	}, [status])
 
-	let ItemsEl = itemsArr.map(item =>{
-		
+	
+	const verSh = state.filter(item => item.ProcessStatus === 1).length;
+	const onVetSh = state.filter(item => item.ProcessStatus > 1).length;
+	const onPaydSH = state.filter(item => item.IsPaid === 1).length;
+
+	const indexOfLastPost = currentPage * postsPerPage;
+	const indexOfFirstPost = indexOfLastPost - postsPerPage; 
+	const currentPosts = itemsArr.slice(indexOfFirstPost, indexOfLastPost);
+	
+	let ItemsEl = currentPosts.map(item =>{
 		return(
 			<Items onfoto={()=>setImageStye("")} idPer={()=> setIdImg(item.BId)} url={item.VId} nameShtraf={item.VDescription} paymentStatus={item.IsPaid} statuses={item.ProcessStatus} key={item.ID}/>	
 		)
 	})
-	const verSh = state.filter(item => item.ProcessStatus === 1).length;
-	const onVetSh = state.filter(item => item.ProcessStatus > 1).length;
-	const onPaydSH = state.filter(item => item.IsPaid === 1).length;
+
 	return (
 		<>
 			<Loader className={isLoaded}/>
-			<ImageShtraf idx={id} IDImage={IdImg} ImageShtrafClass={imageStye} onClose={()=>setImageStye("d-none")}/>
+			<ImageShtraf idx={id} IDImage={IdImg} ImageShtrafClass={imageStye} onClose={() => setImageStye("d-none")}/>
 			<Layout className={load} component={()=>{
 				return(
 					<div id="MyShtraph" className="col-md-10 my-4">
@@ -157,23 +166,18 @@ const MyShtraph = ({id}) => {
 										</div>
 										<div className="shown row d-flex justify-content-between">
 											<div className="col-sm-6 col-12 col-lg-3 d-flex align-items-center">
-												<p>Показано <span>10</span> из <span>86</span></p>
+												<p>Показано <span>{ItemsEl.length}</span> из <span>{itemsArr.length}</span></p>
 											</div>
-											<div className="col-sm-6 mt-sm-0 mt-4 col-12 col-lg-3 d-flex align-items-center">
+											<div className="col-sm-6 mt-sm-0 mt-4 col-12 col-lg-3 justify-content-end d-flex align-items-center">
 												<div id="pagination">
 													<nav aria-label="...">
 													  	<ul className="pagination">
 													  	  	<li className="page-item ">
-													  	  	  	<a className="page-link" href="#" tabIndex="-1" aria-disabled="false">Предыдущая</a>
+													  	  	  	<a className="page-link" href="#" tabIndex="-1" aria-disabled="false">◄</a>
 													  	  	</li>
-													  	  	<li className="page-item active" >
-													  	  	  	<a className="page-link" href="#">1</a>
-													  	  	</li>
+													  	  	<Pagination cp={currentPage} paginate={ items => setCurrentPage(items)} postsPerPage={postsPerPage} totalPosts={itemsArr.length}/>
 													  	  	<li className="page-item">
-													  	  		<a className="page-link" href="#">3</a>
-													  	  	</li>
-													  	  	<li className="page-item">
-													  	  	  	<a className="page-link" href="#">Следыдущая</a>
+													  	  	  	<a className="page-link" href="#">►</a>
 													  	  	</li>
 													  	</ul>
 													</nav>
@@ -190,4 +194,6 @@ const MyShtraph = ({id}) => {
 		</>
 	)
 }
+
 export default MyShtraph;
+
