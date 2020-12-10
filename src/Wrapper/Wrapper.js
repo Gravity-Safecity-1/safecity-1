@@ -3,6 +3,7 @@ import './Wrapper.css';
 import LogIn from '../layouts/LogIn/LogIn';
 import Home from '../layouts/Home/Home';
 import MyShtraph from '../layouts/MyShtraph/MyShtraph';
+import Natification from '../layouts/Natification/Natification';
 import ImageShtraf from '../components/ImageShtraf/ImageShtraf';
 import {Route, Switch,Redirect, Link} from 'react-router-dom'
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
@@ -23,6 +24,7 @@ export default function Wrapper() {
 				} />
 				<Route path="/img" exact component={ImageShtraf}/>
 				<ProtectedRoute path="/" exact component={Home}/>
+				<ProtectedRoute path="/natification" component={Natification}/>
 				<Redirect  to="/" />
 			</Switch>
 		</div>
