@@ -1,0 +1,11 @@
+#Natification>div{
+	background: #FFFFFF;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+	padding: 25px;
+}
+#Natification>div h1{
+	font-size: 26px;
+	text-align: center;
+	font-weight: 500;
+}

@@ -29,11 +29,7 @@ const Header=()=>{
 	}
 	let persDropStyle = "d-none";
 	let persNatStyle = "d-none";
-	let Natifications = NatificationArr.map(item=>{
-		return(
-			<Natification src={item.src} name={item.name} soName={item.soName} shtrafName={item.shtrafName} time={item.time} key={item.id} />
-		)
-	})
+	let Natifications = NatificationArr.map(item=> <Natification src={item.src} name={item.name} soName={item.soName} shtrafName={item.shtrafName} time={item.time} key={item.id} />)
 	if(persDrop){
 		persDropStyle = "";
 	}
@@ -53,7 +49,7 @@ const Header=()=>{
 							<path d="M14.25 6.33331C14.25 5.07353 13.7496 3.86535 12.8588 2.97456C11.968 2.08376 10.7598 1.58331 9.5 1.58331C8.24022 1.58331 7.03204 2.08376 6.14124 2.97456C5.25045 3.86535 4.75 5.07353 4.75 6.33331C4.75 11.875 2.375 13.4583 2.375 13.4583H16.625C16.625 13.4583 14.25 11.875 14.25 6.33331Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 							<path d="M10.8696 16.625C10.7304 16.8649 10.5306 17.0641 10.2903 17.2025C10.0499 17.341 9.7774 17.4139 9.50002 17.4139C9.22263 17.4139 8.95012 17.341 8.70975 17.2025C8.46939 17.0641 8.26962 16.8649 8.13043 16.625" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 							</svg>
-							<span className="not_badge">5</span>
+							<span className={NatificationArr.length > 0? 'not_badge': 'd-none'}>{NatificationArr.length}</span>
 						</div>
 						<div className={persNatStyle} id="natDrop">
 							<div className="natificationHeader d-flex">
@@ -63,10 +59,10 @@ const Header=()=>{
 								<span onClick={onClear}>очистить</span>
 							</div>
 							<div className="natificBody">
-								{Natifications}
+								{NatificationArr.length > 0? Natifications: <div className="my-3 text-danger text-center"> Уведомления нету </div>}
 							</div>
 							<h5 className="natificFooter">
-								<a href="">показать все</a>
+								<Link to="/natification">показать все</Link>
 							</h5>
 						</div>	
 					</div>

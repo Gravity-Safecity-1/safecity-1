@@ -10,6 +10,7 @@ function Home(props) {
 	const [Item, setItems] = useState([]);
     const [load, setLoad] = useState('d-none');
     const [isLoaded, setIsLoaded] = useState('');
+    const [sandSms, setSandSms] = useState(null)
 	const [columns, setColumns] = useState([{
     	    key: "Name",
     	    align: "center",
@@ -85,13 +86,15 @@ function Home(props) {
             align: "center",
             text: "ОПОВЕЩЕНИЕ",
             cell: (row) => {
+                setSandSms(row.SendSms)
                 const onSwitch = event => {
-                    row.SendSms = 0;
+                    setSandSms(row.SendSms = 0)
+                    row.SendSms = 1;
                     console.log(row.SendSms)
                 }
                 return (
                     <p className="mb-0 custom-control custom-switch">
-						<input checked={row.SendSms === 1? true: false} onChange={onSwitch} type="checkbox" className="custom-control-input" id={row.ID} />
+						<input checked={sandSms === 1? true: false} onChange={onSwitch} type="checkbox" className="custom-control-input" id={row.ID} />
 						<label className="custom-control-label" htmlFor={row.ID}></label>
 					</p>
                 );
@@ -136,7 +139,7 @@ function Home(props) {
         }
 	})
 	useEffect(()=>{
-		api.get(`/customers?page=1&pagesize=500`)
+		api.post(`/customers?page=1&pagesize=500`)
 			.then(res=>{
 				const customersArr = res.data.customers;
 				setItems(customersArr);
