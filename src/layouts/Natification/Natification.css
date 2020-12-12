@@ -9,3 +9,62 @@
 	text-align: center;
 	font-weight: 500;
 }
+#Natification thead{
+	background: #F6F7FB;
+	padding: 14px;
+}
+#Natification thead tr th:first-child{
+	text-align: left;
+}
+#Natification thead tr th{
+	font-size: 14px;
+	line-height: 16px;
+	border-bottom: 2px solid #E2E5E8;
+	border-top: 2px solid #E2E5E8;
+	text-align: center;
+	color: black
+}
+
+#pagination .page-link{
+	font-size: 12px;
+	line-height: 16px;
+	color: #B8B8B8;
+}
+#pagination .page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #005395;
+    border-color: #005395;
+}
+#pagination .page-link {
+	padding: 10px
+}
+.page-link:hover {
+    z-index: 2;
+    color: #0056b3 !important;
+    text-decoration: none;
+    background-color: #fafafa;
+    border-color: #dee2e6;
+}
+#Natification h6{
+	font-size: 14px;
+	line-height: 16px;
+	margin-bottom: 	0px;
+}
+#Natification p{
+	font-size: 14px;
+	line-height: 16px;
+	color: rgba(0, 0, 0, 0.5);
+	margin-bottom: 0px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+#Natification p span{
+	display: block;
+}
+#Natification td{
+	border-bottom: 2px solid #E2E5E8;
+	vertical-align: middle;
+	text-align: center;
+}

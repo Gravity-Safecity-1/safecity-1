@@ -5,70 +5,52 @@ import Loader from '../../components/Loader/Loader';
 import api from '../../api/index';
 import ReactDatatable from '@ashvin27/react-datatable';
 import {withRouter} from 'react-router-dom';
+import DriversInfo from './Drivers/Drivers';
+import NumberAuto from './NumberAuto/NumberAuto';
+import Violation from './Violation/Violation';
 
 export default function Natification(props) {
-	const [ft, setFt] = useState({
-		src: null,
-    	name: null,
-    	phone: null,
-	})
+	
 	const [load, setLoad] = useState('d-none');
 	const [loader, setLoader] = useState('');
 	const [Customerid, setCustomerid] = useState( null);
 	const [Drivers, setDrivers] = useState([])
 	const [columns, setColumns] = useState([{
-    	key: "BId",
+    	key: "CustomerID",
     	align: "center",
     	text: "ФИО",
     	sortable: true,
     	cell:(row)=>{
-    		api.get(`/customer/${row.CustomerID}`)
-				.then(res=>{
-					setFt({
-						src: res.data.customer.Images,
-				    	name: res.data.customer.Name,
-				    	phone: res.data.customer.PhoneNo,
-					})
-				})
-				.catch(rej=>{
-				})
     		return(
-    			<div className="d-flex align-items-center">
-		  			<div>
-		  				<img src={ft.src} alt=""/>{row.CustomerID}
-		  			</div>
-		  			<div className="ml-3 text-left">
-		  				<h6>{ft.name}</h6>
-		  				<p>+{ft.phone}</p>
-		  			</div>
-		  		</div>
+    			<>
+    				<DriversInfo idx={row.CustomerID}/>
+    			</>
     		)
     	}
     	},
     	{
-    	    key: "VehiclePlate",
+    	    key: "BID",
     	    align: "center",
     	    TrOnlyClassName: "address",
     	    text: "НОМЕР АВТО",
     	    sortable: true,
+    	    cell:(row)=>{
+    	    	return(
+    	    		<NumberAuto idx={row.CustomerID} bid={row.BID}/>
+    	    	)
+    	    }
 
     	},
     	
     	{
-    	    key: "Total",
+    	    key: "CreatedAt",
     	    align: "center",
-    	    text: "ВСЕГО",
+    	    text: "ИМЯ ШТРАФА",
     	    sortable: true,
             cell:(row)=>{
-    	    	api.get(`/customer/${row.customerID}/violation/${row.BId}`)
-					.then(res=>{
-					})
-					.catch(rej=>{
-						alert(rej)
-					})
                 return(
                 	<>
-	                	
+	                	<Violation idx={row.CustomerID} bid={row.BID}/>
                 	</>
                 )
             }
@@ -78,7 +60,7 @@ export default function Natification(props) {
             text: "",
             cell: (key) => {
                 return (
-                    <div onClick={()=> props.history.push(`/my-shtraf/${key.ID}`)}  className="c-p">
+                    <div onClick={()=> props.history.push(`/my-shtraf/${key.CustomerID}`)}  className="c-p">
 				    	<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z" stroke="#005395" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 							<path d="M17.5 17.5L13.875 13.875" stroke="#005395" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -92,12 +74,12 @@ export default function Natification(props) {
 	const [config, setConfig] = useState({
 		page_size: 10,
         length_menu: [10, 20, 50],
-        show_filter: true,
+        show_filter: false,
         show_pagination: true,
         pagination: 'advance',
         button: {
-            excel: true,
-            print: true
+            excel: false,
+            print: false
         },
         language: {
            length_menu: "Показать _MENU_ ",
@@ -115,11 +97,10 @@ export default function Natification(props) {
 	useEffect(() => {
 		api.get('/notifications')
 			.then(res=>{
-				const cust = res.data.notifications
-				console.log(cust)
-				setDrivers(cust)
-				setLoad('')
-				setLoader('d-none')
+				const cust = res.data.notifications;
+				setDrivers(cust);
+				setLoad('');
+				setLoader('d-none');
 			})
 			.catch(rej=>{
 
@@ -127,11 +108,7 @@ export default function Natification(props) {
 
 			api.get(`/customer/3`)
 				.then(res=>{
-					setFt({
-						src: res.data.customer.Images,
-				    	name: res.data.customer.Name,
-				    	phone: res.data.customer.PhoneNo,
-					})
+					
 				})
 				.catch(rej=>{
 				})
