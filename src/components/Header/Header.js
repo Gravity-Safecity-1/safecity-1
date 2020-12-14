@@ -1,18 +1,25 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './Header.css';
 import Natification from'./Natification/Natification';
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
+import api from '../../api/index';
 
 const Header=()=>{
 	const [persDrop, setPersDrop] = useState(false);
 	const [natiDrop, setNatiDrop] = useState(false);
-	const [NatificationArr, setNatificationArr] = useState([
-		{id: 1, src: "images/users/user.png", name: "Фарход", soName: "Азизов", shtrafName: "Проезд на красный цвет", time: 10},
-		{id: 2, src: "images/users/user.png", name: "Фарход", soName: "Азизов", shtrafName: "Проезд на красный цвет", time: 20},
-		{id: 3, src: "images/users/user.png", name: "Фарход", soName: "Азизов", shtrafName: "Проезд на красный цвет", time: 30},
-	])
+	const [NatificationArr, setNatificationArr] = useState([])
+	useEffect(() => {
+		api.get('/notifications')
+			.then(res=>{
+				const natification = res.data.notifications.reverse().slice(0,3)
+				setNatificationArr(natification)
+				
+			})
+			.catch(rej =>{})
+	}, [])
 	const onPers=()=>{
 		setPersDrop(!persDrop)
+		setNatiDrop(false);
 	}
 	const onClear=()=>{
 		setNatificationArr([])
@@ -29,7 +36,7 @@ const Header=()=>{
 	}
 	let persDropStyle = "d-none";
 	let persNatStyle = "d-none";
-	let Natifications = NatificationArr.map(item=> <Natification src={item.src} name={item.name} soName={item.soName} shtrafName={item.shtrafName} time={item.time} key={item.id} />)
+	let Natifications = NatificationArr.map(item => <Natification  uId={item.CustomerID} bId={item.BID} key={item.ID}/>);
 	if(persDrop){
 		persDropStyle = "";
 	}
@@ -51,10 +58,12 @@ const Header=()=>{
 							</svg>
 							<span className={NatificationArr.length > 0? 'not_badge': 'd-none'}>{NatificationArr.length}</span>
 						</div>
-						<div className={persNatStyle} id="natDrop">
+						<div className={persNatStyle} onMouseLeave={()=>setNatiDrop(false)} id="natDrop">
 							<div className="natificationHeader d-flex">
 								<b onClick={onCloseNat}>x</b>
-								<h6 className="mr-4">Уведомления</h6>
+								<h6 className="mr-4">
+									<Link to="/natification" className="text-white text-decoration-none">Уведомления</Link>
+								</h6>
 								<span>отметить как проч .</span>
 								<span onClick={onClear}>очистить</span>
 							</div>
@@ -67,24 +76,23 @@ const Header=()=>{
 						</div>	
 					</div>
 					<div className="user-wrapper ml-4">
-						<div className="user c-p" onClick={onPers}>
+						<div className="user c-p" onClick={onPers} >
 							<img src="images/users/user.png" alt="" />
-							<span className="not_badge">2</span>
 						</div>
-						<div id="persDrop" className={persDropStyle}>
+						<div id="persDrop" className={persDropStyle} onMouseLeave={()=>setPersDrop(false)}>
 							<div className="d-flex align-items-center admin" >
 								<b onClick={onClosePers}>x</b>
 								<div className="mr-3">
 									<img src="images/users/user-2.png" alt="" />
 								</div>
 								<span>Админ</span>
-								<a href="/login" className="d-block ml-4 pl-3">
+								<Link to="/login" className="d-block ml-4 pl-3">
 									<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path d="M7.5 17.5H4.16667C3.72464 17.5 3.30072 17.3244 2.98816 17.0118C2.67559 16.6993 2.5 16.2754 2.5 15.8333V4.16667C2.5 3.72464 2.67559 3.30072 2.98816 2.98816C3.30072 2.67559 3.72464 2.5 4.16667 2.5H7.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 										<path d="M13.3333 14.1666L17.4999 9.99998L13.3333 5.83331" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 										<path d="M17.5 10H7.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 									</svg>
-								</a>
+								</Link>
 							</div>
 						</div>	
 					</div>

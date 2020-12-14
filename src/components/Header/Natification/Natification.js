@@ -1,11 +1,60 @@
-import React from 'react'
-import './Natification.css'
+import React, {useState, useEffect} from 'react'
+import './Natification.css';
+import api from '../../../api/index';
 
-export default function Natification({src ,name, soName ,shtrafName ,time}) {
+export default function Natification(props) {
+	const [state, setState] = useState({
+		src: null,
+		name: null,
+		soName:null,
+		shtrafName:null,
+		time: null,
+
+	})
+
+	useEffect(() => {
+		api.get(`customer/${props.uId}/violation/${props.bId}`)
+			.then(res=>{
+				const natification = res.data.violation;
+				let At = natification.VTime;
+				console.log(Date.parse(At)) 
+				api.get(`customer/${props.uId}`)
+					.then(resp=>{
+						const {customer} = resp.data;
+						setState({
+							src: customer.Image,
+							name: customer.Name,
+							soName:null,
+							shtrafName: natification.VDescription,
+							time: At,
+
+						})
+					})
+					.catch(rej=>{
+						
+					})
+			})
+			.catch(rej=>{
+
+			})
+
+		return()=>{
+			setState(state)
+		}	
+		
+	}, [])
+	console.log(state.time)
+	return (
+		<>
+			<Nat src={state.src} name={state.name} soName={state.soName} shtrafName={state.shtrafName} time={state.time} />
+		</>
+	)
+}
+function Nat({src ,name, soName ,shtrafName ,time}) {
 	return (
 		<div className="row my-4" id="nat-n">
 			<div className="col-3">
-				<img src={src} className="" alt="" />
+				<img src={src === null? 'images/drivers/no-foto.jpg': src} className="" alt="" />
 			</div>
 			<div className="col-6 px-1">
 				<h6>{name} {soName}</h6>

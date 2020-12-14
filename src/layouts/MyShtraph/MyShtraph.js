@@ -30,7 +30,7 @@ const MyShtraph = ({id}) => {
 	const [load, setLoad] = useState('d-none');
 	const [isLoaded, setIsLoaded] = useState('');
 	const [currentPage, setCurrentPage] = useState(1)
-	const [postsPerPage] = useState(4)
+	const [postsPerPage] = useState(10)
 
 	useEffect(() => {
 		api.get(`/customer/${id}?page=1&pagesize=500`)
@@ -119,6 +119,9 @@ const MyShtraph = ({id}) => {
 			<Items onfoto={()=>setImageStye("")} idPer={()=> setIdImg(item.BId)} url={item.VId} nameShtraf={item.VDescription} paymentStatus={item.IsPaid} statuses={item.ProcessStatus} key={item.ID}/>	
 		)
 	})
+	if(currentPosts.length <= 0){
+		ItemsEl = <Items nameShtraf="dont shtraf"/>
+	}
 
 	return (
 		<>

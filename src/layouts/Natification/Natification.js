@@ -19,7 +19,6 @@ export default function Natification(props) {
     	key: "CustomerID",
     	align: "center",
     	text: "ФИО",
-    	sortable: true,
     	cell:(row)=>{
     		return(
     			<>
@@ -33,7 +32,6 @@ export default function Natification(props) {
     	    align: "center",
     	    TrOnlyClassName: "address",
     	    text: "НОМЕР АВТО",
-    	    sortable: true,
     	    cell:(row)=>{
     	    	return(
     	    		<NumberAuto idx={row.CustomerID} bid={row.BID}/>
@@ -46,7 +44,6 @@ export default function Natification(props) {
     	    key: "CreatedAt",
     	    align: "center",
     	    text: "ИМЯ ШТРАФА",
-    	    sortable: true,
             cell:(row)=>{
                 return(
                 	<>
@@ -73,7 +70,7 @@ export default function Natification(props) {
 
 	const [config, setConfig] = useState({
 		page_size: 10,
-        length_menu: [10, 20, 50],
+        length_menu: [10, 20, 30],
         show_filter: false,
         show_pagination: true,
         pagination: 'advance',
