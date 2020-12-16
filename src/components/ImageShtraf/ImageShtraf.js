@@ -6,7 +6,12 @@ import api from '../../api/index';
 
 const ImageShtraf =(props)=>{
     const {ImageShtrafClass, onClose, IDImage} = props;
-    const [violation, setViolations] = useState([])
+    const [violation, setViolations] = useState({
+        VTime: null,
+        VLocation: null,
+        ProcessStatus: null,
+        IsPaid: null,
+    })
     const [strafInfo, setStrafInfo] = useState({
         time: null,
         location:null,
@@ -16,23 +21,19 @@ const ImageShtraf =(props)=>{
     const [infoobj, setInfoobj] = useState([])
 
     useEffect(() => {
-        api.get(`/customer/${props.idx}`)
+        api.get(`/customer/${props.idx}/violation/${IDImage}`)
             .then(res=>{
-                const {violations} = res.data;
-                setViolations(violations.filter(item => item.BId === props.IDImage ));
+                const {violation} = res.data
+                setViolations({
+                    VTime: violation.VTime,
+                    VLocation: violation.VLocation,
+                    ProcessStatus: violation.ProcessStatus,
+                    IsPaid: violation.IsPaid,
+                })
             })
+            .catch(rej=>{})
     }, [])
     console.log(violation)
-    const image = violation.map(item=>{
-        return(
-            <Image data={item.VTime} key={item.BId} place={item.VLocation} status={item.ProcessStatus} paymount={item.IsPaid} clz="active" src="images/Shtraf/Shtraf-1.png" />
-        )
-    })
-    const image2 = violation.map(item=>{
-        return(
-            <Image data={item.VTime} key={item.BId} place={item.VLocation} status={item.ProcessStatus} paymount={item.IsPaid} src="images/Shtraf/Shtraf-1.png" />
-        )
-    })
     return (
         <div className={ImageShtrafClass} id="ImageShtraf">
             <div className="ImageClose">
@@ -47,8 +48,8 @@ const ImageShtraf =(props)=>{
                 <ol className="carousel-indicators">
                 </ol>
                 <div className="carousel-inner d-inline-block h-100 py-5 px-sm-5 px-0">
-                    {image}
-                    {image2}
+                <Image data={violation.VTime} place={violation.VLocation} status={violation.ProcessStatus} paymount={violation.IsPaid} clz="active" />
+                <Image data={violation.VTime} place={violation.VLocation} status={violation.ProcessStatus} paymount={violation.IsPaid} />
                 </div>
                 <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                     <span className="text-dark">

@@ -93,10 +93,7 @@ function Home(props) {
                     console.log(row.SendSms)
                 }
                 return (
-                    <p className="mb-0 custom-control custom-switch">
-						<input checked={sandSms === 1? true: false} onChange={onSwitch} type="checkbox" className="custom-control-input" id={row.ID} />
-						<label className="custom-control-label" htmlFor={row.ID}></label>
-					</p>
+                    <CSwitch id={row.ID}/>
                 );
             }
         },
@@ -139,7 +136,7 @@ function Home(props) {
         }
 	})
 	useEffect(()=>{
-		api.post(`/customers?page=1&pagesize=500`)
+		api.get(`/customers?page=1&pagesize=500`)
 			.then(res=>{
 				const customersArr = res.data.customers;
 				setItems(customersArr);
@@ -174,3 +171,30 @@ function Home(props) {
 
 
 export default withRouter(Home);
+//
+const CSwitch = (props)=>{
+    const [change, setChange] = useState(false)
+
+    useEffect(() => {
+        api.post(`/customer/${props.id}`)
+            .then(res =>{
+                res.data.customer.SendSms === 0? setChange(false):setChange(true);
+                change === true ? res.data.customer.SendSms = 1: res.data.customer.SendSms = 0;
+            })
+            .catch(rej=>{
+            })
+        return ()=>{
+            setChange(change)
+        }
+    }, [])
+    
+    const onSwitch= event =>{
+        setChange(!change)
+    }
+    return(
+        <p className="mb-0 custom-control custom-switch">
+            <input checked={change} onChange={onSwitch} type="checkbox" className="custom-control-input" id={props.id} />
+            <label className="custom-control-label" htmlFor={props.id}></label>
+        </p>
+    )
+}

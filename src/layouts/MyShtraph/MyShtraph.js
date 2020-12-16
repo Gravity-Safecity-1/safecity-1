@@ -116,17 +116,16 @@ const MyShtraph = ({id}) => {
 	// arr user shtraf
 	let ItemsEl = currentPosts.map(item =>{
 		return(
-			<Items onfoto={()=>setImageStye("")} idPer={()=> setIdImg(item.BId)} url={item.VId} nameShtraf={item.VDescription} paymentStatus={item.IsPaid} statuses={item.ProcessStatus} key={item.ID}/>	
+			<Items onfoto={()=>setImageStye("")} idPer={()=> setIdImg(item.BId)} url={item.VId} nameShtraf={item.VDescription} paymentStatus={item.IsPaid} statuses={item.ProcessStatus} key={item.ID}/>
 		)
 	})
 	if(currentPosts.length <= 0){
 		ItemsEl = <Items nameShtraf="dont shtraf"/>
 	}
-
 	return (
 		<>
 			<Loader className={isLoaded}/>
-			<ImageShtraf idx={id} IDImage={IdImg} ImageShtrafClass={imageStye} onClose={() => setImageStye("d-none")}/>
+			<ImageShtraf idx={id} IDImage={Number(IdImg)} ImageShtrafClass={imageStye} onClose={() => setImageStye("d-none")}/>
 			<Layout className={load} component={()=>{
 				return(
 					<div id="MyShtraph" className="col-md-10 my-4">

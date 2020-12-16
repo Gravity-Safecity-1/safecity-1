@@ -24,7 +24,15 @@ export default function Wrapper() {
 				} />
 				<Route path="/img" exact component={ImageShtraf}/>
 				<ProtectedRoute path="/" exact component={Home}/>
-				<ProtectedRoute path="/natification" component={Natification}/>
+				<ProtectedRoute path="/natification" exact component={Natification}/>
+				<ProtectedRoute path="/natification/:id" exact render={
+					({match})=>{
+						const {id} = match.params;
+						return(
+							<MyShtraph id={id} />
+						)
+					}
+				} />
 				<Redirect  to="/" />
 			</Switch>
 		</div>

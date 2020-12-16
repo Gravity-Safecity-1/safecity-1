@@ -17,7 +17,6 @@ export default function Natification(props) {
 			.then(res=>{
 				const natification = res.data.violation;
 				let At = natification.VTime;
-				console.log(Date.parse(At)) 
 				api.get(`customer/${props.uId}`)
 					.then(resp=>{
 						const {customer} = resp.data;
@@ -43,7 +42,7 @@ export default function Natification(props) {
 		}	
 		
 	}, [])
-	console.log(state.time)
+	
 	return (
 		<>
 			<Nat src={state.src} name={state.name} soName={state.soName} shtrafName={state.shtrafName} time={state.time} />
