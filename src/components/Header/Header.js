@@ -4,39 +4,56 @@ import Natification from'./Natification/Natification';
 import {Link} from 'react-router-dom';
 import api from '../../api/index';
 
+const initialState = {
+	persDrop: false,
+	natiDrop: false,
+	NatificationArr: [],
+}
+
 const Header=()=>{
-	const [persDrop, setPersDrop] = useState(false);
-	const [natiDrop, setNatiDrop] = useState(false);
-	const [NatificationArr, setNatificationArr] = useState([])
+	// const [persDrop, setPersDrop] = useState(false);
+	// const [natiDrop, setNatiDrop] = useState(false);
+	// const [NatificationArr, setNatificationArr] = useState([])
+
+	const [state, setState] = useState(initialState);
+	const {persDrop, natiDrop, NatificationArr} = state;
+
 	useEffect(() => {
-		api.get('/notifications')
-			.then(res=>{
-				const natification = res.data.notifications.reverse().slice(0,3)
-				setNatificationArr(natification)
-				
-			})
-			.catch(rej =>{})
-		return()=>{
-			setNatificationArr(NatificationArr)
+		function getNatifications(){
+			api.get('/notifications')
+				.then(res=>{
+					const natification = res.data.notifications.reverse().slice(0,3)
+					setState({...state, NatificationArr: natification})
+					
+				})
+				.catch(rej =>{})
 		}
+		getNatifications()
 	}, [])
 	const onPers=()=>{
-		setPersDrop(!persDrop)
-		setNatiDrop(false);
+		setState({
+			...state,
+			persDrop: !persDrop,
+			natiDrop: false
+		})
 	}
 	const onClear=()=>{
-		setNatificationArr([])
+		setState({...state, NatificationArr: []})
 	}
 	const onClosePers=()=>{
-		setPersDrop(false)
+		setState({...state, persDrop: false})
 	}
 	const onCloseNat=()=>{
-		setNatiDrop(false)
+		setState({...state, natiDrop: false})
 	}
 	const onNatif =()=>{
-		setNatiDrop(!natiDrop);
-		setPersDrop(false)
+		setState({
+			...state,
+			persDrop: false,
+			natiDrop: !natiDrop
+		})
 	}
+
 	let persDropStyle = "d-none";
 	let persNatStyle = "d-none";
 	let Natifications = NatificationArr.map(item => <Natification  uId={item.CustomerID} bId={item.BID} key={item.ID}/>);
@@ -61,7 +78,7 @@ const Header=()=>{
 							</svg>
 							<span className={NatificationArr.length > 0? 'not_badge': 'd-none'}>{NatificationArr.length}</span>
 						</div>
-						<div className={persNatStyle} onMouseLeave={()=>setNatiDrop(false)} id="natDrop">
+						<div className={persNatStyle} onMouseLeave={()=>setState({...state, natiDrop: false})} id="natDrop">
 							<div className="natificationHeader d-flex">
 								<b onClick={onCloseNat}>x</b>
 								<h6 className="mr-4">
@@ -82,7 +99,7 @@ const Header=()=>{
 						<div className="user c-p" onClick={onPers} >
 							<img src="images/users/user.png" alt="" />
 						</div>
-						<div id="persDrop" className={persDropStyle} onMouseLeave={()=>setPersDrop(false)}>
+						<div id="persDrop" className={persDropStyle} onMouseLeave={()=>setState({...state, persDrop: false})}>
 							<div className="d-flex align-items-center admin" >
 								<b onClick={onClosePers}>x</b>
 								<div className="mr-3">

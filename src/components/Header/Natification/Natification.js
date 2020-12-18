@@ -13,33 +13,32 @@ export default function Natification(props) {
 	})
 
 	useEffect(() => {
-		api.get(`customer/${props.uId}/violation/${props.bId}`)
-			.then(res=>{
-				const natification = res.data.violation;
-				let At = natification.VTime;
-				api.get(`customer/${props.uId}`)
-					.then(resp=>{
-						const {customer} = resp.data; 
-						setState({
-							src: customer.Image,
-							name: customer.Name,
-							soName:null,
-							shtrafName: natification.VDescription,
-							time: At,
+		function getNat(){
+			api.get(`customer/${props.uId}/violation/${props.bId}`)
+				.then(res=>{
+					const natification = res.data.violation;
+					let At = natification.VTime;
+					api.get(`customer/${props.uId}`)
+						.then(resp=>{
+							const {customer} = resp.data; 
+							setState({
+								src: customer.Image,
+								name: customer.Name,
+								soName:null,
+								shtrafName: natification.VDescription,
+								time: At,
 
+							})
 						})
-					})
-					.catch(rej=>{
-						
-					})
-			})
-			.catch(rej=>{
+						.catch(rej=>{
+							
+						})
+				})
+				.catch(rej=>{
 
-			})
-		return()=>{
-			setState(state)
-		}	
-		
+				})
+		}
+		getNat()
 	}, [])
 
 	return (
