@@ -1,25 +1,32 @@
 import React, {useState, useEffect} from 'react';
 import api from '../../../api/index';
 
+const initialState = {
+	num: null,
+	cont: true
+}
+
 export default function NumberAuto({idx,bid}) {
-	const [num, setNum] = useState(null);
-	const [cont, setCont] = useState(true)
+	const [state, setState] = useState(initialState);
+	const {num,cont} = state
+
 	useEffect(() => {
-		api.get(`customer/${idx}/violation/${bid}`)
-			.then(res=>{
-				setNum(res.data.violation.VehiclePlate);
-			})
-			.catch(rej=>{
-			})
-		return()=>{
-			setCont(false)
-		}	
-	}, [num])
+		function getNum(){
+			api.get(`customer/${idx}/violation/${bid}`)
+				.then(res=>{
+					const {VehiclePlate} = res.data.violation 
+					setState({num: VehiclePlate, cont:false});
+				})
+				.catch(rej=>{
+				})
+		}
+		getNum()
+				
+	}, [])
 
 	return (
 		<div className="d-flex align-items-center">
 			{cont?<Spinner/>:<Cont num={num}/>}
-			
 		</div>
 	)
 }

@@ -1,29 +1,37 @@
 import React, {useState, useEffect} from 'react';
 import api from '../../../api/index';
 
-export default function DriversInfo({idx}) {
-	const [ft, setFt] = useState({
+const initiaState = {
+	ft: {
 		src: null,
     	name: null,
     	phone: null,
-	});
-	const [cont, setCont] = useState(true)
-	useEffect(() => {
-		api.get(`/customer/${idx}`)
-			.then(res=>{
-				setFt({
-					src: res.data.customer.Images,
-			    	name: res.data.customer.Name,
-			    	phone: res.data.customer.PhoneNo ,
-				})
-			})
-			.catch(rej=>{
-			})
+	},
+	cont: true
+}
 
-		return()=>{
-			setCont(false)
-		}	
-	}, [ft])
+export default function DriversInfo({idx}) {
+	const [state, setState] = useState(initiaState)
+	const {ft, cont} = state;
+	useEffect(() => {
+		function getInfo(){
+			api.get(`/customer/${idx}`)
+				.then(res=>{
+					setState({
+						...state,
+						ft:{
+							src: res.data.customer.Images,
+				    		name: res.data.customer.Name,
+				    		phone: res.data.customer.PhoneNo ,
+				    	},
+				    	cont: false,	
+					})
+				})
+				.catch(rej=>{
+				})
+		}
+		getInfo()
+	}, [])
 
 	return (
 		<div className="d-flex align-items-center">
@@ -32,6 +40,8 @@ export default function DriversInfo({idx}) {
 		</div>
 	)
 }
+
+
 const Cont = ({src,name,phone}) =>{
 	return(
 		<>

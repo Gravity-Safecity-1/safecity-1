@@ -1,22 +1,32 @@
 import React, {useState, useEffect} from 'react';
 import api from '../../../api/index';
 
+const initialState = {
+	num: null,
+	cont: true,
+	violetionId: null
+}
+
 export default function Violation({idx,bid}) {
-	const [num, setNum] = useState(null);
-	const [cont, setCont] = useState(true);
-	const [violetionId, setVioletionId] = useState(null);
+	const [state, setState] = useState(initialState)
+	const {num, cont, violetionId} = state
+
 	useEffect(() => {
-		api.get(`customer/${idx}/violation/${bid}`)
-			.then(res=>{
-				setNum(res.data.violation.VDescription);
-				setVioletionId(res.data.violation.VId);
-			})
-			.catch(rej=>{
-			})
-		return()=>{
-			setCont(false)
-		}	
-	}, [num])
+		function getVioletion(){
+			api.get(`customer/${idx}/violation/${bid}`)
+				.then(res=>{ 
+					const {VDescription, VId} = res.data.violation;
+					setState({
+						num: VDescription,
+						cont: false,
+						violetionId: VId
+					})
+				})
+				.catch(rej=>{
+				})
+		}
+		getVioletion()	
+	}, [])
 
 	return (
 		<div className="d-flex align-items-center">
@@ -25,6 +35,7 @@ export default function Violation({idx,bid}) {
 		</div>
 	)
 }
+
 const Cont = ({num, url}) =>{
 	let r = (s)=>{
 		switch(s){ 
