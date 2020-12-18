@@ -64,9 +64,7 @@ const MyShtraph = ({id}) => {
 				});
 		};
 		getItems();
-		return()=>{
-			setState(state)
-		}
+		return()=>{ setState(state) }
 	}, []);
 	
 	useEffect(() => {
@@ -133,11 +131,10 @@ const MyShtraph = ({id}) => {
 			<Items onfoto={()=>setState({...state, imageStye:" ",})} idPer={()=> setState({...state, IdImg: item.BId})} url={item.VId} nameShtraf={item.VDescription} paymentStatus={item.IsPaid} statuses={item.ProcessStatus} key={item.ID}/>
 		)
 	})
-	console.log(currentPosts, "ss")
 	if(currentPosts.length <= 0){
-		ItemsEl = <Items nameShtraf="don't shtraf"/>;
-		setState({...state,currentPage: pageN})
+		ItemsEl = <Items nameShtraf="don't shtraf"/>
 	}
+
 	return (
 		<> 
 			{
