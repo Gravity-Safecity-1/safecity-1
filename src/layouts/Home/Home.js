@@ -1,120 +1,130 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import './Home.css';
 import Layout from '../../components/Layout/Layout';
 import api from '../../api/index';
 import ReactDatatable from '@ashvin27/react-datatable';
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import Loader from '../../components/Loader/Loader';
 
-function Home(props) {
-	const [Item, setItems] = useState([]);
-    const [load, setLoad] = useState('d-none');
-    const [isLoaded, setIsLoaded] = useState('');
-    const [sandSms, setSandSms] = useState(null)
-	const [columns, setColumns] = useState([{
-    	    key: "Name",
-    	    align: "center",
-    	    text: "ФИО",
-    	    sortable: true,
-    	    cell:(row)=>{
-    	    	return(
-    	    		<div className="d-flex align-items-center">
-			    		<div>
-			    			<img src={row.Image} alt=""/>
-			    		</div>
-			    		<div className="ml-3 text-left">
-			    			<h6>{row.Name}</h6>
-			    			<p>+{row.PhoneNo}</p>
-			    		</div>
-			    	</div>
-    	    	)
-    	    }
-    	},
-    	{
-    	    key: "VehiclePlate",
-    	    align: "center",
-    	    TrOnlyClassName: "address",
-    	    text: "НОМЕР АВТО",
-    	    sortable: true
-    	},
-    	{
-    	    key: "ThreeDay",
-    	    align: "center",
-    	    text: "3 ДНЯ",
-    	    sortable: true,
-            cell:(row)=>{
-                return(
-                    row.ThreeDay === 0 ? 0: row.ThreeDay
-                )
-            }
-    	},
-    	{
-    	    key: "SevenDay",
-    	    align: "center",
-    	    text: "7 ДНЕЙ",
-    	    sortable: true,
-            cell:(row)=>{
-                return(
-                    row.SevenDay === 0 ? 0: row.SevenDay
-                )
-            }
-    	},
-    	{
-    	    key: "NinetyDay",
-    	    align: "center",
-    	    text: "90 ДНЕЙ",
-    	    sortable: true,
-            cell:(row)=>{
-                return(
-                    row.NinetyDay === 0 ? 0: row.NinetyDay
-                )
-            }
-    	},
-    	{
-    	    key: "Total",
-    	    align: "center",
-    	    text: "ВСЕГО",
-    	    sortable: true,
-            cell:(row)=>{
-                return(
-                    row.Total === 0 ? 0: row.Total
-                )
-            }
-    	},
-        {
-            key: "SendSms",
-            align: "center",
-            text: "ОПОВЕЩЕНИЕ",
-            cell: (row) => {
-                setSandSms(row.SendSms)
-                const onSwitch = event => {
-                    setSandSms(row.SendSms = 0)
-                    row.SendSms = 1;
-                    console.log(row.SendSms)
-                }
-                return (
-                    <CSwitch id={row.ID}/>
-                );
-            }
-        },
-        {
-            key: "ID",
-            text: "",
-            cell: (key) => {
-                return (
-                    <div onClick={()=> props.history.push(`/my-shtraf/${key.ID}`)}  className="c-p">
-				    	<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z" stroke="#005395" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-							<path d="M17.5 17.5L13.875 13.875" stroke="#005395" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-						</svg>
-					</div> 
-                );
-            }
-         }
-    ]);
+const initialState = (props) => ({
+    items: [],
+    loading: true,
+    columns: [{
+        key: "Name",
+        align: "center",
+        text: "ФИО",
+        sortable: true,
+        cell: (row) => {
+            return (
+                <div className="d-flex align-items-center">
+                    <div>
+                        <img src={row.Image} alt="" />
+                    </div>
+                    <div className="ml-3 text-left">
+                        <h6>{row.Name}</h6>
+                        <p>+{row.PhoneNo}</p>
+                    </div>
+                </div>
+            )
+        }
+    },
+    {
+        key: "VehiclePlate",
+        align: "center",
+        TrOnlyClassName: "address",
+        text: "НОМЕР АВТО",
+        sortable: true
+    },
+    {
+        key: "ThreeDay",
+        align: "center",
+        text: "3 ДНЯ",
+        sortable: true,
+        cell: (row) => {
+            return (
+                row.ThreeDay === 0 ? 0 : row.ThreeDay
+            )
+        }
+    },
+    {
+        key: "SevenDay",
+        align: "center",
+        text: "7 ДНЕЙ",
+        sortable: true,
+        cell: (row) => {
+            return (
+                row.SevenDay === 0 ? 0 : row.SevenDay
+            )
+        }
+    },
+    {
+        key: "NinetyDay",
+        align: "center",
+        text: "90 ДНЕЙ",
+        sortable: true,
+        cell: (row) => {
+            return (
+                row.NinetyDay === 0 ? 0 : row.NinetyDay
+            )
+        }
+    },
+    {
+        key: "Total",
+        align: "center",
+        text: "ВСЕГО",
+        sortable: true,
+        cell: (row) => {
+            return (
+                row.Total === 0 ? 0 : row.Total
+            )
+        }
+    },
+    {
+        key: "SendSms",
+        align: "center",
+        text: "ОПОВЕЩЕНИЕ",
+        cell: (row) => {
 
-	const [config, setConfig] = useState({
-		page_size: 10,
+            console.log(row);
+            const handleChange = event => {
+                console.log(event);
+                api.get(`/customer/${row.ID}/change-sms-send`)
+                    .then(res => {
+                        //console.log(res);
+                        event.target.checked = (res.data.send_sms) ? true : false
+                    })
+                    .catch(rej => {
+                        console.log(rej);
+                    })
+            }
+            return (
+                <>
+                    <p className="mb-0">
+                        <label className="custom-control-label" htmlFor={row.id}></label>
+                        <input checked={(row.SendSms === 1) ? true : false} onChange={handleChange} type="checkbox" className="" id={row.id} />
+
+                    </p>
+                </>
+            );
+        }
+    },
+    {
+        key: "ID",
+        text: "",
+        cell: (key) => {
+            return (
+                <div onClick={() => props.history.push(`/my-shtraf/${key.ID}`)} className="c-p">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z" stroke="#005395" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M17.5 17.5L13.875 13.875" stroke="#005395" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                </div>
+            );
+        }
+    }
+    ],
+    config: {
+        page_size: 10,
         length_menu: [10, 20, 50],
         show_filter: true,
         show_pagination: true,
@@ -124,77 +134,73 @@ function Home(props) {
             print: true
         },
         language: {
-           length_menu: "Показать _MENU_ ",
-           filter: "Поиск",
-           info: "Показано от _START_ до _END_ из _TOTAL_ ",
-           pagination: {
-               first: "First",
-               previous: <span>&#9668;</span>,
-               next: <span>&#9658;</span>,
-               last: "Last"
-           }
+            length_menu: "Показать _MENU_ ",
+            filter: "Поиск",
+            info: "Показано от _START_ до _END_ из _TOTAL_ ",
+            pagination: {
+                first: "First",
+                previous: <span>&#9668;</span>,
+                next: <span>&#9658;</span>,
+                last: "Last"
+            }
         }
-	})
-	useEffect(()=>{
-		api.get(`/customers?page=1&pagesize=500`)
-			.then(res=>{
-				const customersArr = res.data.customers;
-				setItems(customersArr);
-				columns.forEach(item => item.key === "ID" ? item.cell(item.ID): null);
-                setLoad('');
-                setIsLoaded('d-none')
-			})
-			.catch(rej=>{
-				
-			})
-	},[])
+    },
+}
+)
 
 
-	return (
-		<>
-            <Loader className={isLoaded}/>
-			<Layout className={load} component={() => {
-				return (
-					<div className="col-md-10 mt-4 mb-4" id="Home">
-						<ReactDatatable
-			                config={config}
-			                records={Item}
-			                columns={columns}/>
-					</div>
-				)
-			}} />
-			 
-		</>
-	)
-		
+function Home(props) {
+
+
+    const [state, setState] = useState(initialState(props))
+
+    const { loading } = state;
+    const { config } = state;
+    const { items } = state;
+    const { columns } = state;
+
+
+
+    useEffect(() => {
+        const getData = () => {
+            api.get(`/customers?page=1&pagesize=5000`)
+                .then(res => {
+                    const customersArr = res.data.customers;
+                    setState(prevState => {
+
+                        return { ...prevState, items: customersArr, loading: false }
+                    
+                    })
+                })
+                .catch(rej => {
+                    console.log("500");
+                });
+        }
+        getData();
+    }, [])
+
+
+
+    return (loading) ? (
+        <Loader />
+    ) :
+        (
+            <>
+                <Layout component={() => {
+                    return (
+                        <div className="col-md-10 mt-4 mb-4" id="Home">
+                            <ReactDatatable
+                                config={config}
+                                records={items}
+                                columns={columns} />
+                        </div>
+                    )
+                }} />
+
+            </>
+        )
+
 }
 
 
 export default withRouter(Home);
-//
-const CSwitch = (props)=>{
-    const [change, setChange] = useState(false)
-
-    useEffect(() => {
-        api.post(`/customer/${props.id}`)
-            .then(res =>{
-                res.data.customer.SendSms === 0? setChange(false):setChange(true);
-                change === true ? res.data.customer.SendSms = 1: res.data.customer.SendSms = 0;
-            })
-            .catch(rej=>{
-            })
-        return ()=>{
-            setChange(change)
-        }
-    }, [])
-    
-    const onSwitch= event =>{
-        setChange(!change)
-    }
-    return(
-        <p className="mb-0 custom-control custom-switch">
-            <input checked={change} onChange={onSwitch} type="checkbox" className="custom-control-input" id={props.id} />
-            <label className="custom-control-label" htmlFor={props.id}></label>
-        </p>
-    )
-}

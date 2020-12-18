@@ -12,6 +12,10 @@ import Loader from '../../components/Loader/Loader';
 import ImageShtraf from '../../components/ImageShtraf/ImageShtraf';
 import Pagination from '../../components/Pagination/Pagination';
 
+
+const initialState = {
+	
+}
 const MyShtraph = ({id}) => {
 	const [filter, setFilter] = useState('all');
 	const [payment, setPayment] = useState('all');
