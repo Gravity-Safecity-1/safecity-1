@@ -19,7 +19,7 @@ export default function Natification(props) {
 				let At = natification.VTime;
 				api.get(`customer/${props.uId}`)
 					.then(resp=>{
-						const {customer} = resp.data;
+						const {customer} = resp.data; 
 						setState({
 							src: customer.Image,
 							name: customer.Name,
@@ -36,13 +36,12 @@ export default function Natification(props) {
 			.catch(rej=>{
 
 			})
-
 		return()=>{
 			setState(state)
 		}	
 		
 	}, [])
-	
+
 	return (
 		<>
 			<Nat src={state.src} name={state.name} soName={state.soName} shtrafName={state.shtrafName} time={state.time} />

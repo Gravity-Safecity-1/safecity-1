@@ -124,7 +124,7 @@ const MyShtraph = ({id}) => {
 		)
 	})
 	if(currentPosts.length <= 0){
-		ItemsEl = <Items nameShtraf="dont shtraf"/>
+		ItemsEl = <Items nameShtraf="don't shtraf"/>
 	}
 	return (
 		<>

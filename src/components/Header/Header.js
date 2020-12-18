@@ -16,6 +16,9 @@ const Header=()=>{
 				
 			})
 			.catch(rej =>{})
+		return()=>{
+			setNatificationArr(NatificationArr)
+		}
 	}, [])
 	const onPers=()=>{
 		setPersDrop(!persDrop)

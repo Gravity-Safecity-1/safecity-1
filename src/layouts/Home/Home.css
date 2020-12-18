@@ -73,8 +73,8 @@
 }
 #Home .custom-control-input:checked~.custom-control-label::before {
     color: #fff;
-    border-color: #4BD865;
-    background-color: #4BD865;
+    border-color: #007bff;
+    background-color: #007bff;
 }
 #Home .custom-control-input:focus{
 	box-shadow: 0px 0px 0px transparent
@@ -93,8 +93,14 @@
     background-color: white;
     cursor: pointer;
 }
-#Home .custom-switch .custom-control-label{
-	top: -10px
+#Home .custom-control{
+	display: flex;
+	justify-content: start;
+}
+#Home .custom-control-input{
+	z-index: 1;
+	cursor: pointer;
+	width: 2rem;
 }
 #Home h6{
 	font-size: 14px;
