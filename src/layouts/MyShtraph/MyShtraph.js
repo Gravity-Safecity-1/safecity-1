@@ -14,193 +14,212 @@ import Pagination from '../../components/Pagination/Pagination';
 
 
 const initialState = {
-	
-}
-const MyShtraph = ({id}) => {
-	const [filter, setFilter] = useState('all');
-	const [payment, setPayment] = useState('all');
-	const [status, setStatus] = useState('all');
-	const [itemsArr, setItemsArr] = useState([]);
-	const [DriverEl, setDriverEl] = useState({
+	filter: "all",
+	payment: "all",
+	status: "all",
+	itemsArr: [],
+	DriverEl: {
 		VehiclePlate: null,
 		name: null,
 		PhoneNo: null,
 		userImage: null,
-	});
-	const [imageStye, setImageStye] = useState("d-none");
-	const [IdImg, setIdImg] = useState(null);
-	const [state, setState] = useState([]);
+	},
+	imageStye: 'd-none',
+	IdImg: null,
+	itemsArr2: [],
+	loading: true,
+	currentPage: 1,
+	postsPerPage: 10
+}
 
-	const [load, setLoad] = useState('d-none');
-	const [isLoaded, setIsLoaded] = useState('');
-	const [currentPage, setCurrentPage] = useState(1)
-	const [postsPerPage] = useState(10)
+const MyShtraph = ({id}) => {
+	const [state, setState] = useState(initialState);
+
+	const { filter, payment, status, itemsArr, DriverEl, imageStye, IdImg, itemsArr2, loading, currentPage, postsPerPage } = state;
 
 	useEffect(() => {
-		api.get(`/customer/${id}?page=1&pagesize=500`)
-			.then(res =>{
-				let {violations,customer} = res.data,
-					yearApiVersion = customer.Birthday,
-					bearthDay = yearApiVersion.split("").slice(0,4).join(""),
-					nowYear = new Date().getFullYear(),
-					bearthDayParse = parseInt(nowYear) - parseInt(bearthDay);
+		function getItems(){
+			api.get(`/customer/${id}?page=1&pagesize=500`)
+				.then(res =>{
+					let {violations,customer} = res.data,
+						yearApiVersion = customer.Birthday,
+						bearthDay = yearApiVersion.split("").slice(0,4).join(""),
+						nowYear = new Date().getFullYear(),
+						bearthDayParse = parseInt(nowYear) - parseInt(bearthDay);
 
-				setItemsArr(violations)
-				setState(violations)
-				setDriverEl({
-					VehiclePlate: customer.VehiclePlate,
-					name: customer.Name,
-					PhoneNo: customer.PhoneNo,
-					Year: bearthDayParse,
-					userImage: customer.Image,
-				})
-				setLoad('');
-				setIsLoaded('d-none')
-			})
-	}, [])
+					setState({
+						...state, 
+						itemsArr: violations, 
+						itemsArr2: violations,
+						DriverEl:{
+							VehiclePlate: customer.VehiclePlate,
+							name: customer.Name,
+							PhoneNo: customer.PhoneNo,
+							Year: bearthDayParse,
+							userImage: customer.Image,
+						},
+						loading: false
+					});
+					
+				});
+		};
+		getItems();
+		return()=>{
+			setState(state)
+		}
+	}, []);
 	
 	useEffect(() => {
+
 		if(filter === "stopLine"){
-			const s = state.filter(item => item.VId === "1345" || item.VId === "1625");
-			setItemsArr(s)
+			const s = itemsArr2.filter(item => item.VId === "1345" || item.VId === "1625");
+			setState( {...state, itemsArr:s } )
 		}else if( filter === 'redColor'  ){
-			const s = state.filter(item => item.VId === "1302");
-			setItemsArr(s)
+			const s = itemsArr2.filter(item => item.VId === "1302");
+			setState( {...state, itemsArr:s } )
 		}else if(filter === 'line'){
-			const s = state.filter(item => item.VId === "1230");
-			setItemsArr(s)
+			const s = itemsArr2.filter(item => item.VId === "1230");
+			setState( {...state, itemsArr:s } )
 		}else if(filter === 'againts'){
-			const s = state.filter(item => item.VId === "1301");
-			setItemsArr(s)
+			const s = itemsArr2.filter(item => item.VId === "1301");
+			setState( {...state, itemsArr:s } )
 		}else{
-			setItemsArr(state)
+			setState( {...state, itemsArr: itemsArr2} )
 		}
 
-		
-	}, [filter])
+	}, [filter]);
 
 	useEffect(() => {
+
 		if(payment === 'yes'){
-			const s = state.filter(item => item.IsPaid === 1);
-			setItemsArr(s)
+			const s = itemsArr2.filter(item => item.IsPaid === 1);
+			setState( {...state, itemsArr:s } )
 		}else if(payment === 'no'){
-			const s = state.filter(item => item.IsPaid === 0);
-			setItemsArr(s)
+			const s = itemsArr2.filter(item => item.IsPaid === 0);
+			setState( {...state, itemsArr:s } )
 		}else{
-			setItemsArr(state)
+			setState( {...state, itemsArr: itemsArr2} )
 		}
 		
-	}, [payment])
+	}, [payment]);
 
 	useEffect(() => {
 		if(status === 'ver'){
-			const s = state.filter(item => item.ProcessStatus == 1);
-			setItemsArr(s)
+			const s = itemsArr2.filter(item => item.ProcessStatus == 1);
+			setState( {...state, itemsArr:s } )
 		}else if(status === 'notVer'){
-			const s = state.filter(item => item.ProcessStatus > 1);
-			setItemsArr(s)
+			const s = itemsArr2.filter(item => item.ProcessStatus > 1);
+			setState( {...state, itemsArr:s } )
 		}else{
-			setItemsArr(state)
+			setState( {...state, itemsArr: itemsArr2} )
 		}
-		console.log(status)
 	}, [status])
 
 	
 	//auto elements
-	const verSh = state.filter(item => item.ProcessStatus === 1).length;
-	const onVetSh = state.filter(item => item.ProcessStatus > 1).length;
-	const onPaydSH = state.filter(item => item.IsPaid === 1).length;
+	const verSh = itemsArr2.filter(item => item.ProcessStatus === 1).length;
+	const onVetSh = itemsArr2.filter(item => item.ProcessStatus > 1).length;
+	const onPaydSH = itemsArr2.filter(item => item.IsPaid === 1).length;
 
 	//paination
 	const indexOfLastPost = currentPage * postsPerPage;
 	const indexOfFirstPost = indexOfLastPost - postsPerPage; 
 	const currentPosts = itemsArr.slice(indexOfFirstPost, indexOfLastPost);
-	const pageN = Math.ceil(itemsArr.length/postsPerPage)
+	const pageN = Math.ceil(itemsArr.length/postsPerPage);
 	
 	// arr user shtraf
 	let ItemsEl = currentPosts.map(item =>{
 		return(
-			<Items onfoto={()=>setImageStye("")} idPer={()=> setIdImg(item.BId)} url={item.VId} nameShtraf={item.VDescription} paymentStatus={item.IsPaid} statuses={item.ProcessStatus} key={item.ID}/>
+			<Items onfoto={()=>setState({...state, imageStye:" ",})} idPer={()=> setState({...state, IdImg: item.BId})} url={item.VId} nameShtraf={item.VDescription} paymentStatus={item.IsPaid} statuses={item.ProcessStatus} key={item.ID}/>
 		)
 	})
+	console.log(currentPosts, "ss")
 	if(currentPosts.length <= 0){
-		ItemsEl = <Items nameShtraf="don't shtraf"/>
+		ItemsEl = <Items nameShtraf="don't shtraf"/>;
+		setState({...state,currentPage: pageN})
 	}
 	return (
-		<>
-			<Loader className={isLoaded}/>
-			<ImageShtraf idx={id} IDImage={Number(IdImg)} ImageShtrafClass={imageStye} onClose={() => setImageStye("d-none")}/>
-			<Layout className={load} component={()=>{
-				return(
-					<div id="MyShtraph" className="col-md-10 my-4">
-						<div>
-							<div className="row">
-								<Auto numberAuto={DriverEl.VehiclePlate} paydStraf={onPaydSH} verShtraf={verSh} onVerShtraf={onVetSh}/>
-								<Driver name={DriverEl.name} userImage={DriverEl.userImage} year={DriverEl.Year} tel={DriverEl.PhoneNo}/>
-								<div className="col-12">
-									<div id="violetions" className="">
-										<div className='row'>
-											<div className=" col-12 ">
-												<div>
-													<h3 className=" mb-1">Тип нарушения</h3>
-													<TypeShtraph filter={filter} onFilter={(filter)=>{setFilter(filter)}}/>
-												</div>
-											</div>
-											<div className="mt-4 col-12 ">
-												<div>
-													<h3 className="mb-1">Оплата</h3>
-													<Payment filter={payment} onFilter={(filter)=>{setPayment(filter)}}/>
-												</div>
-											</div>
-											<div className=" mt-4 col-12 mt-4">
-												<div>
-													<h3 className="mb-1">Статус</h3>
-													<Status filter={status} onFilter={(filter)=>{setStatus(filter)}}/>
+		<> 
+			{
+				loading ? (
+					<Loader/>
+				) : (  
+					<>
+						<ImageShtraf idx={id} IDImage={Number(IdImg)} ImageShtrafClass={imageStye} onClose={() => setState({...state, imageStye: "d-none",}) }/>
+						<Layout component={()=>{
+							return(
+								<div id="MyShtraph" className="col-md-10 my-4">
+									<div>
+										<div className="row">
+											<Auto numberAuto={DriverEl.VehiclePlate} paydStraf={onPaydSH} verShtraf={verSh} onVerShtraf={onVetSh}/>
+											<Driver name={DriverEl.name} userImage={DriverEl.userImage} year={DriverEl.Year} tel={DriverEl.PhoneNo}/>
+											<div className="col-12">
+												<div id="violetions" className="">
+													<div className='row'>
+														<div className=" col-12 ">
+															<div>
+																<h3 className=" mb-1">Тип нарушения</h3>
+																<TypeShtraph filter={filter} onFilter={(filter)=>{setState({...state, filter: filter})}}/>
+															</div>
+														</div>
+														<div className="mt-4 col-12 ">
+															<div>
+																<h3 className="mb-1">Оплата</h3>
+																<Payment filter={payment} onFilter={(filter)=>{setState({...state, payment:filter})}}/>
+															</div>
+														</div>
+														<div className=" mt-4 col-12 mt-4">
+															<div>
+																<h3 className="mb-1">Статус</h3>
+																<Status filter={status} onFilter={(filter)=>{setState({...state,status:filter})}}/>
+															</div>
+														</div>
+													</div>
+													<div className="t mt-3">		
+														<table className="table w-100 table-bordered table-striped mt-3 ">
+														  	<thead>
+														    	<tr>
+														    	  	<th scope="col">ТИП НАРУШЕНИЯ</th>
+														    	  	<th scope="col">ОПЛАТА</th>
+														    	  	<th scope="col">СТАТУС</th>
+														    	  	<th scope="col">ФОТО</th>
+														    	</tr>
+														  	</thead>
+														    <tbody>
+														    	{ItemsEl}
+														    </tbody>
+														</table>
+													</div>
+													<div className="shown row d-flex justify-content-between">
+														<div className="col-sm-6 col-12 col-lg-3 d-flex align-items-center">
+															<p>Показано <span>{ItemsEl.length}</span> из <span>{itemsArr.length}</span></p>
+														</div>
+														<div className="col-sm-6 mt-sm-0 mt-4 col-12 col-lg-3 justify-content-end d-flex align-items-center">
+															<div id="pagination">
+																<nav aria-label="...">
+																  	<ul className="pagination">
+																  	  	<li className="page-item ">
+																  	  	  	<button onClick={()=> currentPage > 1 ? setState({...state,currentPage: currentPage-1}): setState({...state,currentPage:1})} className="page-link" >◄</button>
+																  	  	</li>
+																  	  	<Pagination cp={currentPage} paginate={ items => setState({...state,currentPage:items})} postsPerPage={postsPerPage} totalPosts={itemsArr.length}/>
+																  	  	<li className="page-item">
+																  	  	  	<button onClick={()=> currentPage < pageN ? setState({...state,currentPage:currentPage+1}): setState({...state,currentPage: pageN})} className="page-link">►</button>
+																  	  	</li>
+																  	</ul>
+																</nav>
+															</div>	
+														</div>
+													</div>	
 												</div>
 											</div>
 										</div>
-										<div className="t mt-3">		
-											<table className="table w-100 table-bordered table-striped mt-3 ">
-											  	<thead>
-											    	<tr>
-											    	  	<th scope="col">ТИП НАРУШЕНИЯ</th>
-											    	  	<th scope="col">ОПЛАТА</th>
-											    	  	<th scope="col">СТАТУС</th>
-											    	  	<th scope="col">ФОТО</th>
-											    	</tr>
-											  	</thead>
-											    <tbody>
-											    	{ItemsEl}
-											    </tbody>
-											</table>
-										</div>
-										<div className="shown row d-flex justify-content-between">
-											<div className="col-sm-6 col-12 col-lg-3 d-flex align-items-center">
-												<p>Показано <span>{ItemsEl.length}</span> из <span>{itemsArr.length}</span></p>
-											</div>
-											<div className="col-sm-6 mt-sm-0 mt-4 col-12 col-lg-3 justify-content-end d-flex align-items-center">
-												<div id="pagination">
-													<nav aria-label="...">
-													  	<ul className="pagination">
-													  	  	<li className="page-item ">
-													  	  	  	<button onClick={()=> currentPage > 1 ? setCurrentPage(currentPage-1): setCurrentPage(1)} className="page-link" >◄</button>
-													  	  	</li>
-													  	  	<Pagination cp={currentPage} paginate={ items => setCurrentPage(items)} postsPerPage={postsPerPage} totalPosts={itemsArr.length}/>
-													  	  	<li className="page-item">
-													  	  	  	<button onClick={()=> currentPage < pageN ? setCurrentPage(currentPage+1): setCurrentPage(pageN)} className="page-link">►</button>
-													  	  	</li>
-													  	</ul>
-													</nav>
-												</div>	
-											</div>
-										</div>	
 									</div>
 								</div>
-							</div>
-						</div>
-					</div>
+							)
+						}}/>
+					</>
 				)
-			}}/>
+			}
 		</>
 	)
 }
