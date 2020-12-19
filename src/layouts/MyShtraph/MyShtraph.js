@@ -128,11 +128,11 @@ const MyShtraph = ({id}) => {
 	// arr user shtraf
 	let ItemsEl = currentPosts.map(item =>{
 		return(
-			<Items onfoto={()=>setState({...state, imageStye:" ",})} idPer={()=> setState({...state, IdImg: item.BId})} url={item.VId} nameShtraf={item.VDescription} paymentStatus={item.IsPaid} statuses={item.ProcessStatus} key={item.ID}/>
+			<Items onfoto={()=>setState({...state, imageStye:" ",})} idPer={()=> setState({...state, IdImg: item.BId})} violation={item} noData={false} key={item.ID}/>
 		)
 	})
 	if(currentPosts.length <= 0){
-		ItemsEl = <Items nameShtraf="don't shtraf"/>
+		ItemsEl = <Items noData={true}/>
 	}
 
 	return (
