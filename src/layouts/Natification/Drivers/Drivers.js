@@ -36,7 +36,6 @@ export default function DriversInfo({idx}) {
 	return (
 		<div className="d-flex align-items-center">
 			{cont?<Spinner/>:<Cont src={ft.src} name={ft.name} phone={ft.phone}/>}
-			
 		</div>
 	)
 }

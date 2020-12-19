@@ -11,9 +11,6 @@ const initialState = {
 }
 
 const Header=()=>{
-	// const [persDrop, setPersDrop] = useState(false);
-	// const [natiDrop, setNatiDrop] = useState(false);
-	// const [NatificationArr, setNatificationArr] = useState([])
 
 	const [state, setState] = useState(initialState);
 	const {persDrop, natiDrop, NatificationArr} = state;

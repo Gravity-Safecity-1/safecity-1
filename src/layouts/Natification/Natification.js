@@ -98,11 +98,19 @@ export default function Natification(props) {
     		api.get('/notifications')
     			.then(res=>{
     				const cust = res.data.notifications;
-                    setState(pState =>({...pState, Drivers: cust, loading: false }))
+                    setState(pState =>({...pState, Drivers: cust}))
     			})
     			.catch(rej=>{
 
     			})
+
+            api.get('/customer/2')
+                .then(res=>{
+                    setState(pState =>({...pState, loading: false }))
+                })
+                .catch(rej=>{
+
+                })
         }
 		getNatification()
 
