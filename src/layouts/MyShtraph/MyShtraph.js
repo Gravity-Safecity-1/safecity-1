@@ -18,54 +18,53 @@ const initialState = {
 	payment: "all",
 	status: "all",
 	itemsArr: [],
-	DriverEl: {
-		VehiclePlate: null,
-		name: null,
-		PhoneNo: null,
-		userImage: null,
-	},
-	imageStye: 'd-none',
-	IdImg: null,
+	customer: {},
+	imageViolation:{},
+	imageShow:false,
 	itemsArr2: [],
 	loading: true,
 	currentPage: 1,
 	postsPerPage: 10
 }
 
+const inStatePh = {
+	imageViolation:null,
+	imageShow:false,
+}
+
 const MyShtraph = ({id}) => {
 	const [state, setState] = useState(initialState);
+	const [phstate, setPhState] = useState(inStatePh);
 
-	const { filter, payment, status, itemsArr, DriverEl, imageStye, IdImg, itemsArr2, loading, currentPage, postsPerPage } = state;
+	const { filter, payment, status, itemsArr,itemsArr2, customer }= state;
+	const { loading, currentPage, postsPerPage } = state;
+
+	const {imageViolation, imageShow,} =phstate
 
 	useEffect(() => {
-		function getItems(){
+
+		const getItems = ()=>{
 			api.get(`/customer/${id}?page=1&pagesize=500`)
 				.then(res =>{
 					let {violations,customer} = res.data,
 						yearApiVersion = customer.Birthday,
-						bearthDay = yearApiVersion.split("").slice(0,4).join(""),
-						nowYear = new Date().getFullYear(),
-						bearthDayParse = parseInt(nowYear) - parseInt(bearthDay);
+						bearthDay = yearApiVersion.split("").slice(0,4).join("");
+						customer.YearOld = parseInt(new Date().getFullYear(),) - parseInt(bearthDay);
 
-					setState({
-						...state, 
+					setState(prevState => ({
+						...prevState, 
 						itemsArr: violations, 
 						itemsArr2: violations,
-						DriverEl:{
-							VehiclePlate: customer.VehiclePlate,
-							name: customer.Name,
-							PhoneNo: customer.PhoneNo,
-							Year: bearthDayParse,
-							userImage: customer.Image,
-						},
+						customer,
 						loading: false
-					});
+					}));
 					
 				});
 		};
+
 		getItems();
-		return()=>{ setState(state) }
-	}, []);
+
+	}, [id]);
 	
 	useEffect(() => {
 		let s = null;
@@ -109,6 +108,19 @@ const MyShtraph = ({id}) => {
 
 	}, [status])
 
+
+	const handleImage = (violation)=>{
+		console.log(violation);
+		
+		setPhState(prevState => {
+			return {...prevState, imageViolation:violation, imageShow:true}
+		});
+
+		console.log(state);
+		console.log(phstate);
+	}
+	
+
 	
 	//auto elements
 	const verSh = itemsArr2.filter(item => item.ProcessStatus === 1).length;
@@ -120,11 +132,12 @@ const MyShtraph = ({id}) => {
 	const indexOfFirstPost = indexOfLastPost - postsPerPage; 
 	const currentPosts = itemsArr.slice(indexOfFirstPost, indexOfLastPost);
 	const pageN = Math.ceil(itemsArr.length/postsPerPage);
-	
+
+
 	// arr user shtraf
 	let ItemsEl = currentPosts.map(item =>{
 		return(
-			<Items onfoto={()=>setState({...state, imageStye:"",})} idPer={()=> setState({...state, IdImg: item.BId})} violation={item} noData={false} key={item.ID}/>
+			<Items handleImage={handleImage} idPer={()=> setState({...state, IdImg: item.BId})} violation={item} noData={false} key={item.ID}/>
 		)
 	})
 	if(currentPosts.length <= 0){
@@ -136,16 +149,19 @@ const MyShtraph = ({id}) => {
 			{
 				loading ? (
 					<Loader/>
-				) : (  
+				) : imageShow ? (
 					<>
-						<ImageShtraf idx={id} IDImage={Number(IdImg)} ImageShtrafClass={imageStye} onClose={() => setState({...state, imageStye: "d-none",}) }/>
+					<ImageShtraf violation={imageViolation} onClose={() => setPhState(prevState => ({...prevState, imageShow: false})) }/>
+					</>
+				):  (  
+					<>				
 						<Layout component={()=>{
 							return(
 								<div id="MyShtraph" className="col-md-10 my-4">
 									<div>
 										<div className="row">
-											<Auto numberAuto={DriverEl.VehiclePlate} paydStraf={onPaydSH} verShtraf={verSh} onVerShtraf={onVetSh}/>
-											<Driver name={DriverEl.name} userImage={DriverEl.userImage} year={DriverEl.Year} tel={DriverEl.PhoneNo}/>
+											<Auto numberAuto={customer?.VehiclePlate} paydStraf={onPaydSH} verShtraf={verSh} onVerShtraf={onVetSh}/>
+											<Driver name={customer?.Name} userImage={customer?.Image} year={customer?.YearOld} tel={customer.PhoneNo}/>
 											<div className="col-12">
 												<div id="violetions" className="">
 													<div className='row'>
