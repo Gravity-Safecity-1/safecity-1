@@ -68,49 +68,45 @@ const MyShtraph = ({id}) => {
 	}, []);
 	
 	useEffect(() => {
-
+		let s = null;
 		if(filter === "stopLine"){
-			const s = itemsArr2.filter(item => item.VId === "1345" || item.VId === "1625");
-			setState( {...state, itemsArr:s } )
+			s = itemsArr2.filter(item => item.VId === "1345" || item.VId === "1625");
 		}else if( filter === 'redColor'  ){
-			const s = itemsArr2.filter(item => item.VId === "1302");
-			setState( {...state, itemsArr:s } )
+			s = itemsArr2.filter(item => item.VId === "1302");
 		}else if(filter === 'line'){
-			const s = itemsArr2.filter(item => item.VId === "1230");
-			setState( {...state, itemsArr:s } )
+			s = itemsArr2.filter(item => item.VId === "1230");
 		}else if(filter === 'againts'){
-			const s = itemsArr2.filter(item => item.VId === "1301");
-			setState( {...state, itemsArr:s } )
+			s = itemsArr2.filter(item => item.VId === "1301");
 		}else{
-			setState( {...state, itemsArr: itemsArr2} )
+			s = itemsArr2
 		}
-
+		setState( prevState => ({...prevState, itemsArr: s}) )
 	}, [filter]);
 
 	useEffect(() => {
-
+		let s = null;
 		if(payment === 'yes'){
-			const s = itemsArr2.filter(item => item.IsPaid === 1);
-			setState( {...state, itemsArr:s } )
+			s = itemsArr2.filter(item => item.IsPaid === 1);
 		}else if(payment === 'no'){
-			const s = itemsArr2.filter(item => item.IsPaid === 0);
-			setState( {...state, itemsArr:s } )
+			s = itemsArr2.filter(item => item.IsPaid === 0);
 		}else{
-			setState( {...state, itemsArr: itemsArr2} )
+			s = itemsArr2
 		}
+		setState(prevState => ({...prevState, itemsArr:s }) )
 		
 	}, [payment]);
 
 	useEffect(() => {
+		let s = null;
 		if(status === 'ver'){
-			const s = itemsArr2.filter(item => item.ProcessStatus == 1);
-			setState( {...state, itemsArr:s } )
+			s = itemsArr2.filter(item => item.ProcessStatus == 1);
 		}else if(status === 'notVer'){
-			const s = itemsArr2.filter(item => item.ProcessStatus > 1);
-			setState( {...state, itemsArr:s } )
+			s = itemsArr2.filter(item => item.ProcessStatus > 1);
 		}else{
-			setState( {...state, itemsArr: itemsArr2} )
+			s = itemsArr2;
 		}
+		setState(prevState => ({...prevState, itemsArr: s}) )
+
 	}, [status])
 
 	
