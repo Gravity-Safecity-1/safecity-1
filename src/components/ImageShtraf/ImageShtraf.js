@@ -8,41 +8,40 @@ import api from '../../api/index';
 import md5 from 'md5';
 
 const initialState = {
-
-    images:[],
+    images: [],
 }
 
 const ImageShtraf = ({ ImageShtrafClass, onClose, violation }) => {
 
-   const [state, setState] = useState(initialState)
- 
+    const [state, setState] = useState(initialState)
+    const {images} = state;
+
     useEffect(() => {
 
-        let pin = '4698let p0ytAkht';
+        let pin = '4698$p0ytAkht';
         let username = 'poytakht';
         let text = 'info';
         let hash = md5(username + violation.BId + pin + text);
         let url = `http://download1.safecity.tj/get.aspx?username=${username}&ExternalID=${violation.BId}&key=${hash}&action=${text}`;
 
-       const  getViol =()=> {
-            api.get(url, {crossdomain: true})
+        const getViol = () => {
+            api.get(url, { crossdomain: true })
                 .then(res => {
                     console.log(res.data);
-                    
-                    if (res.data?.code == 200) {
 
-                        const { violation } = res.data
 
-                        setState(prevState => ({
-                            ...prevState,
-                            violation: {
-                                VTime: violation?.VTime,
-                                VLocation: violation?.VLocation,
-                                ProcessStatus: violation?.ProcessStatus,
-                                IsPaid: violation?.IsPaid,
-                            }
-                        }))
+                    let rows = (new DOMParser()).parseFromString(res.data, "text/xml").getElementsByTagName("row");
+                    let arrImg = [];
+                    for (let i = 0; i < rows.length; i++) {
+                        arrImg.push(rows[i].getAttribute('url'))
                     }
+                    //console.log(arrImg);
+
+                    setState(prevState => ({
+                        ...prevState,
+                        images: arrImg,
+                    }));
+
                 })
                 .catch(rej => { })
 
@@ -50,10 +49,17 @@ const ImageShtraf = ({ ImageShtrafClass, onClose, violation }) => {
         getViol()
     }, [violation.BId])
 
-    console.log(violation) 
+
+    let ItemsEl = images.map((item, key) =>{
+		return(
+			<Image src={item} violation={violation} clz={key==0?"active":""} key={key}/>
+		)
+	})
+
+    console.log(violation)
 
     return (
-        <div className={ImageShtrafClass} id="ImageShtraf">
+        <div className="" id="ImageShtraf">
             <div className="ImageClose">
                 <div className="c-p " onClick={onClose}>
                     <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -66,8 +72,9 @@ const ImageShtraf = ({ ImageShtrafClass, onClose, violation }) => {
                 <ol className="carousel-indicators">
                 </ol>
                 <div className="carousel-inner d-inline-block h-100 py-5 px-sm-5 px-0">
-                    <Image data={violation?.VTime} place={violation?.VLocation} status={violation?.ProcessStatus} paymount={violation?.IsPaid} clz="active" />
-                    <Image data={violation?.VTime} place={violation?.VLocation} status={violation?.ProcessStatus} paymount={violation?.IsPaid} />
+                    {/* <Image data={violation?.VTime} place={violation?.VLocation} status={violation?.ProcessStatus} paymount={violation?.IsPaid} clz="active" />
+                    <Image data={violation?.VTime} place={violation?.VLocation} status={violation?.ProcessStatus} paymount={violation?.IsPaid} /> */}
+                    {ItemsEl}
                 </div>
                 <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                     <span className="text-dark">
