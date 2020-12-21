@@ -107,6 +107,7 @@ export default function Natification(props) {
             api.get('/customer/2')
                 .then(res=>{
                     setState(pState =>({...pState, loading: false }))
+                    console.log(res.data)
                 })
                 .catch(rej=>{
 

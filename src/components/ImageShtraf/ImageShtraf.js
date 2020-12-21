@@ -4,35 +4,40 @@ import Image from './Image/Image';
 import Indicators from './Indicators/Indicators';
 import api from '../../api/index';
 
-const ImageShtraf =(props)=>{
-    const {ImageShtrafClass, onClose, IDImage} = props;
-    const [violation, setViolations] = useState({
+const initialState = {
+    violation: {
         VTime: null,
         VLocation: null,
         ProcessStatus: null,
         IsPaid: null,
-    })
-    const [strafInfo, setStrafInfo] = useState({
-        time: null,
-        location:null,
-        status: null,
-        paymount: null
-    })
-    const [infoobj, setInfoobj] = useState([])
+    },
+}
 
+const ImageShtraf =(props)=>{
+    const {ImageShtrafClass, onClose, IDImage} = props;
+    const [state, setState] = useState(initialState)
+    const {violation} = state;
     useEffect(() => {
-        api.get(`/customer/${props.idx}/violation/${IDImage}`)
-            .then(res=>{
-                const {violation} = res.data
-                setViolations({
-                    VTime: violation.VTime,
-                    VLocation: violation.VLocation,
-                    ProcessStatus: violation.ProcessStatus,
-                    IsPaid: violation.IsPaid,
+        function getViol(){
+            api.get(`/customer/${props.idx}/violation/${IDImage}`)
+                .then(res=>{
+                    const {violation} = res.data
+                    setState(prevState =>({
+                        ...prevState,
+                        violation:{
+                            VTime: violation.VTime,
+                            VLocation: violation.VLocation,
+                            ProcessStatus: violation.ProcessStatus,
+                            IsPaid: violation.IsPaid,
+                        }
+                    }))
                 })
-            })
-            .catch(rej=>{})
+                .catch(rej=>{})
+
+        }
+        getViol()
     }, [])
+
     console.log(violation)
     return (
         <div className={ImageShtrafClass} id="ImageShtraf">

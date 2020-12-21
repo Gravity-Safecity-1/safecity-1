@@ -124,7 +124,7 @@ const MyShtraph = ({id}) => {
 	// arr user shtraf
 	let ItemsEl = currentPosts.map(item =>{
 		return(
-			<Items onfoto={()=>setState({...state, imageStye:" ",})} idPer={()=> setState({...state, IdImg: item.BId})} violation={item} noData={false} key={item.ID}/>
+			<Items onfoto={()=>setState({...state, imageStye:"",})} idPer={()=> setState({...state, IdImg: item.BId})} violation={item} noData={false} key={item.ID}/>
 		)
 	})
 	if(currentPosts.length <= 0){
