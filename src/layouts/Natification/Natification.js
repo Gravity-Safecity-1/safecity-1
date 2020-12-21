@@ -4,7 +4,6 @@ import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
 import api from '../../api/index';
 import ReactDatatable from '@ashvin27/react-datatable';
-import {withRouter} from 'react-router-dom';
 import DriversInfo from './Drivers/Drivers';
 import NumberAuto from './NumberAuto/NumberAuto';
 import Violation from './Violation/Violation';
@@ -113,6 +112,15 @@ export default function Natification(props) {
     			.catch(rej=>{
 
     			})
+
+            api.get('/customer/2')
+                .then(res=>{
+                    setState(pState =>({...pState, loading: false }))
+                    console.log(res.data)
+                })
+                .catch(rej=>{
+
+                })
         }
 		getNatification()
 

@@ -15,7 +15,8 @@ const state = {
 }
 
 function LogIn() {
-	const [usr, setState]=useState(state)
+	const [usr, setState] = useState(state);
+	const {warText} = usr;
 	removeToken()
 	removeUser()
 	const handleChange = evt =>{
@@ -38,10 +39,10 @@ function LogIn() {
 		try {
 			const res  = await api.post("/auth", {"login":usr.login, "password":usr.password})
 
-			if (res.data.code==200) {
+			if (res.data.code === 200) {
 				setToken(res.data.token);
 				setUser(JSON.stringify(res.data.user));
-				window.location.href=HOME;
+				window.location.href=HOME; 
 			}else{
 				setState((prevState)=>({
 					...prevState,
@@ -59,10 +60,8 @@ function LogIn() {
 		if(e.keyCode == 13){
 			handleSubmit()
 		}
-	 }
-
-/* //<form onSubmit={e => e.preventDefault()}> */
-
+	}
+	
 	return (
 		<div id="LogIn" className="container-fluid">
 			<div className="row d-flex justify-content-center align-items-center h-100">
@@ -83,7 +82,7 @@ function LogIn() {
 							<label htmlFor="ok" className="ml-2 mb-0">Запомнить</label>
 						</div>
 						<Link to={HOME} type="submit" className="btn w-100 bg-log login-check" onClick={handleSubmit}>Войти</Link>
-						<p className="text-danger my-0 mt-3" >{usr.warText}</p>
+						<p className="text-danger my-0 mt-3" >{warText}</p>
 						<p className="my-3">Забыли пароль? Для восстановления позвоните по номеру <a href="tel:+992 93 100 1010">+992 93 100 1010</a></p>
 					</form>
 				</div>
