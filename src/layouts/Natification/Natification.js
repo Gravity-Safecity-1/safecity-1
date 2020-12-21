@@ -11,7 +11,7 @@ import Violation from './Violation/Violation';
 
 const initialState = props => ({
     loading: true,
-    Drivers: [],
+    notifications: [],
     columns: [
         {
         key: "CustomerID",
@@ -20,7 +20,7 @@ const initialState = props => ({
         cell:(row)=>{
             return(
                 <>
-                    <DriversInfo idx={row.CustomerID}/>
+                    <DriversInfo customer={row.Customer}/>
                 </>
             )
         }
@@ -32,7 +32,7 @@ const initialState = props => ({
             text: "НОМЕР АВТО",
             cell:(row)=>{
                 return(
-                    <NumberAuto idx={row.CustomerID} bid={row.BID}/>
+                    <NumberAuto vehiclePlate={row.Customer.VehiclePlate}/>
                 )
             }
 
@@ -90,15 +90,25 @@ const initialState = props => ({
 })
 
 export default function Natification(props) {
-	const [state, setState] = useState(initialState)
-	const {Drivers, loading, columns, config} = state;
+	const [state, setState] = useState(initialState(props))
+	const {notifications, loading, columns, config} = state;
 
 	useEffect(() => {
         function getNatification(){
     		api.get('/notifications')
     			.then(res=>{
-    				const cust = res.data.notifications;
-                    setState(pState =>({...pState, Drivers: cust, loading: false }))
+                    console.log(res);
+                    const {customers, notifications} = res.data;
+                    notifications.map(item =>{
+                        for (let i = 0; i < customers.length; i++) {
+                            if(customers[i].ID === item.CustomerID){
+                                item.Customer=customers[i];
+                                break;
+                            }                            
+                        }
+                        return item
+                    })
+                    setState(pState =>({...pState,  notifications, loading: false }))
     			})
     			.catch(rej=>{
 
@@ -121,7 +131,7 @@ export default function Natification(props) {
         							<h1>Уведомления</h1>
         							<ReactDatatable
         			                config={config}
-        			                records={Drivers}
+        			                records={notifications}
         			                columns={columns}/>
         						</div>
         					</div>
