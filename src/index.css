@@ -20,3 +20,6 @@ body{
 .or-sm-2{
 	order: 2
 }
+a:hover{
+	text-decoration: none;
+}

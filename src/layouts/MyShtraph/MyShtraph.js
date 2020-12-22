@@ -39,7 +39,7 @@ const MyShtraph = ({id}) => {
 	const { filter, payment, status, itemsArr,itemsArr2, customer }= state;
 	const { loading, currentPage, postsPerPage } = state;
 
-	const {imageViolation, imageShow,} =phstate
+	const {imageViolation, imageShow} = phstate;
 
 	useEffect(() => {
 
@@ -67,7 +67,7 @@ const MyShtraph = ({id}) => {
 	}, [id]);
 	
 	useEffect(() => {
-		let s = null;
+		let s = [];
 		if(filter === "stopLine"){
 			s = itemsArr2.filter(item => item.VId === "1345" || item.VId === "1625");
 		}else if( filter === 'redColor'  ){
@@ -80,10 +80,11 @@ const MyShtraph = ({id}) => {
 			s = itemsArr2
 		}
 		setState( prevState => ({...prevState, itemsArr: s}) )
+
 	}, [filter]);
 
 	useEffect(() => {
-		let s = null;
+		let s = [];
 		if(payment === 'yes'){
 			s = itemsArr2.filter(item => item.IsPaid === 1);
 		}else if(payment === 'no'){
@@ -96,7 +97,7 @@ const MyShtraph = ({id}) => {
 	}, [payment]);
 
 	useEffect(() => {
-		let s = null;
+		let s = [];
 		if(status === 'ver'){
 			s = itemsArr2.filter(item => item.ProcessStatus == 1);
 		}else if(status === 'notVer'){
@@ -110,7 +111,7 @@ const MyShtraph = ({id}) => {
 
 
 	const handleImage = (violation)=>{
-		console.log(violation);
+		console.log(violation , 'ss');
 		
 		setPhState(prevState => {
 			return {...prevState, imageViolation:violation, imageShow:true}
@@ -234,4 +235,3 @@ const MyShtraph = ({id}) => {
 }
 
 export default MyShtraph;
-

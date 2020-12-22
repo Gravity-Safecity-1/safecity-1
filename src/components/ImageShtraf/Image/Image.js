@@ -4,7 +4,7 @@ import './Image.css';
 import InfoShtraf from '../InfoShtraf/InfoShtraf';
 
 export default function Image(props) {
-	const { clz, src, wheel, data, place, status, paymount } = props;
+	const { clz, src, wheel, violation } = props;
     let s = ` h-100  carousel-item ${clz}`;
     return (
         <div className={s} >
@@ -33,7 +33,7 @@ export default function Image(props) {
 			        		<TransformComponent>
 		          				<img src={src} className=" img-fluid h-100" alt=""/>
 			          		</TransformComponent>
-			          		<InfoShtraf data={data} place={place} status={status} paymount={paymount} />
+			          		<InfoShtraf violation={violation} />
 		          		</React.Fragment>
 		          		)}
 	      			</TransformWrapper>

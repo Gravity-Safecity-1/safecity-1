@@ -3,13 +3,12 @@ import api from '../../../api/index';
 
 const initialState = {
 	num: null,
-	cont: true,
 	violetionId: null
 }
 
 export default function Violation({idx,bid}) {
 	const [state, setState] = useState(initialState)
-	const {num, cont, violetionId} = state
+	const {num, violetionId} = state
 
 	useEffect(() => {
 		function getVioletion(){
@@ -18,11 +17,11 @@ export default function Violation({idx,bid}) {
 					const {VDescription, VId} = res.data.violation;
 					setState({
 						num: VDescription,
-						cont: false,
 						violetionId: VId
 					})
 				})
 				.catch(rej=>{
+					console.log(rej)
 				})
 		}
 		getVioletion()	
@@ -30,8 +29,7 @@ export default function Violation({idx,bid}) {
 
 	return (
 		<div className="d-flex align-items-center">
-			{cont?<Spinner/>:<Cont num={num} url={violetionId}/>}
-			
+			<Cont num={num} url={violetionId}/>
 		</div>
 	)
 }
@@ -52,13 +50,5 @@ const Cont = ({num, url}) =>{
 			<div className="mr-2"><img src={r(url)} alt="" /></div>
 			{num}
 		</>
-	)
-}
-
-const Spinner =()=>{
-	return(
-		<div className="spinner-border" role="status">
-		  	<span className="sr-only">Loading...</span>
-		</div>
 	)
 }

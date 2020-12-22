@@ -1,0 +1,35 @@
+#Contacts>div{
+	background: #FFFFFF;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+	padding: 25px;
+	width: 100%;
+}
+#Contacts a h6{
+	font-size: 18px;
+	line-height: 16px;
+	color: #000000;
+	margin-bottom: 	0px;
+}
+#Contacts .cont-def-span{
+	font-size: 16px;
+	line-height: 16px;
+	color: rgba(0, 0, 0, 0.5);
+	display: inline-block;
+}
+#Contacts .socLink p{
+	font-size: 16px;
+	line-height: 16px;
+	text-transform: uppercase;
+}
+#Contacts .socLink a > .cont-def-span { transition: all .2s linear }
+#Contacts .socLink a:hover > .cont-def-span{
+	color: #005395;
+	transition: all .2s linear
+}
+#Contacts .massaners a svg path{ transition: all .2s linear; }
+#Contacts .massaners a:hover svg path{
+	fill: #005395;
+	fill-opacity: 1;
+	transition: all .2s linear;
+}

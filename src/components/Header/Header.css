@@ -2,6 +2,8 @@
 	background-color: white;
 	padding-top: 5px;
 	padding-bottom: 5px; 
+	width: 100%;
+	z-index: 1
 }
 #Header .notification-wrapper .notification{
 	position: relative;
@@ -10,7 +12,9 @@
 	background: #C7383B;
 }
 #Header .notification-wrapper .notification:hover path{
-	stroke: #005395
+	stroke: #005395;
+	stroke-opacity: 1;
+	fill-opacity: 1;
 }
 #Header .notification-wrapper .notification .not_badge{
 	background: #FF484C;
