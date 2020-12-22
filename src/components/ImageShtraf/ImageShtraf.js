@@ -9,10 +9,7 @@ import md5 from 'md5';
 
 const initialState = {
     images: [],
-<<<<<<< HEAD
     loading: true
-=======
->>>>>>> 74fd6b267878be96ae373fdf74595a503cccb21e
 }
 
 const ImageShtraf = ({ onClose, violation }) => {
@@ -20,12 +17,6 @@ const ImageShtraf = ({ onClose, violation }) => {
     const [state, setState] = useState(initialState)
     const {images, loading} = state;
 
-<<<<<<< HEAD
-=======
-    const [state, setState] = useState(initialState)
-    const {images} = state;
-
->>>>>>> 74fd6b267878be96ae373fdf74595a503cccb21e
     useEffect(() => {
 
         let pin = '4698$p0ytAkht';
@@ -50,10 +41,7 @@ const ImageShtraf = ({ onClose, violation }) => {
                     setState(prevState => ({
                         ...prevState,
                         images: arrImg,
-<<<<<<< HEAD
                         loading: false
-=======
->>>>>>> 74fd6b267878be96ae373fdf74595a503cccb21e
                     }));
 
                 })
@@ -65,18 +53,12 @@ const ImageShtraf = ({ onClose, violation }) => {
 
 
     let ItemsEl = images.map((item, key) =>{
-<<<<<<< HEAD
         return(
             <Image src={item} violation={violation} clz={key==0?"active":""} key={key}/>
         )
     })
-    let IndEl = images.map((item,key)=> <Indicators nSlide={key} indClass={key == 0?"active":""} />)
-=======
-		return(
-			<Image src={item} violation={violation} clz={key==0?"active":""} key={key}/>
-		)
-	})
->>>>>>> 74fd6b267878be96ae373fdf74595a503cccb21e
+
+    let IndEl = images.map((item,key)=> <Indicators key={key} nSlide={key} indClass={key == 0?"active":""} />)
 
     console.log(violation)
 
@@ -95,13 +77,7 @@ const ImageShtraf = ({ onClose, violation }) => {
                     {IndEl}
                 </ol>
                 <div className="carousel-inner d-inline-block h-100 py-5 px-sm-5 px-0">
-<<<<<<< HEAD
                     {loading ? <Loader/>: ItemsEl}
-=======
-                    {/* <Image data={violation?.VTime} place={violation?.VLocation} status={violation?.ProcessStatus} paymount={violation?.IsPaid} clz="active" />
-                    <Image data={violation?.VTime} place={violation?.VLocation} status={violation?.ProcessStatus} paymount={violation?.IsPaid} /> */}
-                    {ItemsEl}
->>>>>>> 74fd6b267878be96ae373fdf74595a503cccb21e
                 </div>
                 <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                     <span className="text-dark">

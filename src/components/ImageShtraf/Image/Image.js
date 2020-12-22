@@ -4,16 +4,12 @@ import './Image.css';
 import InfoShtraf from '../InfoShtraf/InfoShtraf';
 
 export default function Image(props) {
-<<<<<<< HEAD
-	const { clz, src, wheel, violation } = props;
-=======
 	const { clz, src, violation } = props;
->>>>>>> 74fd6b267878be96ae373fdf74595a503cccb21e
     let s = ` h-100  carousel-item ${clz}`;
     return (
         <div className={s} >
 			<div className=" h-100 " id="imgWrapperShtraf">
-				<div className="imgWrapperShtraf h-100 px-sm-5 px-0 d-flex justify-content-center" onWheel="">
+				<div className="imgWrapperShtraf h-100 px-sm-5 px-0 d-flex justify-content-center">
 					<TransformWrapper defaultPositionX={0} defaultPositionY={0}>
 					{({ zoomIn, zoomOut, resetTransform, ...rest }) => (
 						<React.Fragment>
@@ -37,11 +33,7 @@ export default function Image(props) {
 			        		<TransformComponent>
 		          				<img src={src} className=" img-fluid h-100" alt=""/>
 			          		</TransformComponent>
-<<<<<<< HEAD
 			          		<InfoShtraf violation={violation} />
-=======
-			          		<InfoShtraf data={data} place={violation} status={violation?.Status} paymount={paymount} />
->>>>>>> 74fd6b267878be96ae373fdf74595a503cccb21e
 		          		</React.Fragment>
 		          		)}
 	      			</TransformWrapper>
