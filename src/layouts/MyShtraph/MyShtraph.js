@@ -117,8 +117,8 @@ const MyShtraph = ({id}) => {
 			return {...prevState, imageViolation:violation, imageShow:true}
 		});
 
-		console.log(state);
-		console.log(phstate);
+		//console.log(state);
+		//console.log(phstate);
 	}
 	
 

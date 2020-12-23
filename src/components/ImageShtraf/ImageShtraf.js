@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import React, { useState, useEffect } from 'react';
 import './ImageShtraf.css';
 import Image from './Image/Image';
@@ -22,9 +23,9 @@ const ImageShtraf = ({ onClose, violation }) => {
         let pin = '4698$p0ytAkht';
         let username = 'poytakht';
         let text = 'info';
-        let hash = md5(username + violation.BId + pin + text);
-        let url = `http://download1.safecity.tj/get.aspx?username=${username}&ExternalID=${violation.BId}&key=${hash}&action=${text}`;
-
+        let hash = md5(username + (violation.BId||violation.BID)+ pin + text);
+        let url = `http://download1.safecity.tj/get.aspx?username=${username}&ExternalID=${violation.BId||violation.BID}&key=${hash}&action=${text}`;
+        console.log(url);
         const getViol = () => {
             api.get(url, { crossdomain: true })
                 .then(res => {
@@ -60,7 +61,7 @@ const ImageShtraf = ({ onClose, violation }) => {
 
     let IndEl = images.map((item,key)=> <Indicators key={key} nSlide={key} indClass={key == 0?"active":""} />)
 
-    console.log(violation)
+
 
     return (
         <div className="" id="ImageShtraf">
