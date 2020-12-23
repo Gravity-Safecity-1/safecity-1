@@ -53,8 +53,8 @@ const MyShtraph = ({id}) => {
 
 					setState(prevState => ({
 						...prevState, 
-						itemsArr: violations, 
-						itemsArr2: violations,
+						itemsArr: violations || [], 
+						itemsArr2: violations || [],
 						customer,
 						loading: false
 					}));

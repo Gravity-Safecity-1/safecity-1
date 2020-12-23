@@ -15,7 +15,7 @@ export default function Violation({idx,bid}) {
 			api.get(`customer/${idx}/violation/${bid}`)
 				.then(res=>{ 
 					const {VDescription, VId} = res.data.violation;
-					setState({
+					setState({ 
 						num: VDescription,
 						violetionId: VId
 					})

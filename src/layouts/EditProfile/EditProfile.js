@@ -29,8 +29,6 @@ export default function EditProfile() {
 										<div className="adminInfo">
 											<h2>Админ Админов</h2>
 											<p>Телефон <span className="d-inline-block ml-4 pl-2">+992 935452332</span></p>
-											<a className="mt-5 mb-2" href="">Редактировать профиль</a>
-											<a href="">Сменить пароль</a>
 										</div>
 									</div>
 								</div>	

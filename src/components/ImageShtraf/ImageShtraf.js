@@ -43,7 +43,7 @@ const ImageShtraf = ({ onClose, violation }) => {
                         images: arrImg,
                         loading: false
                     }));
-
+                    
                 })
                 .catch(rej => { })
 

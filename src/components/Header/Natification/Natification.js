@@ -1,41 +1,30 @@
 import React, {useState, useEffect} from 'react'
 import './Natification.css';
 import api from '../../../api/index';
+import {Link} from 'react-router-dom';
+
+const initialState = {
+	time: null,
+	Vdesc: null,
+} 
 
 export default function Natification(props) {
-	const [state, setState] = useState({
-		src: null,
-		name: null,
-		soName:null,
-		shtrafName:null,
-		time: null,
-
-	})
-
+	const [state, setState] = useState(initialState)
+	const {time, Vdesc} = state
 	useEffect(() => {
 		function getNat(){
 			api.get(`customer/${props.uId}/violation/${props.bId}`)
 				.then(res=>{
 					const natification = res.data.violation;
-					let At = natification.VTime;
-					api.get(`customer/${props.uId}`)
-						.then(resp=>{
-							const {customer} = resp.data; 
-							setState({
-								src: customer.Image,
-								name: customer.Name,
-								soName:null,
-								shtrafName: natification.VDescription,
-								time: At,
-
-							})
-						})
-						.catch(rej=>{
-							
-						})
+					let At = Date.parse(new Date()) - Date.parse(natification.VTime);
+					setState(prevState=>({
+						...prevState,
+						time: At,
+						Vdesc: natification.VDescription
+					}))
 				})
 				.catch(rej=>{
-
+					console.log(rej)
 				})
 		}
 		getNat()
@@ -43,18 +32,27 @@ export default function Natification(props) {
 
 	return (
 		<>
-			<Nat src={state.src} name={state.name} soName={state.soName} shtrafName={state.shtrafName} time={state.time} />
+			<Nat id={props.uId} users={props.user} shtrafName={Vdesc} time={time}  />
 		</>
 	)
 }
-function Nat({src ,name, soName ,shtrafName ,time}) {
+
+
+
+function Nat({users ,id, shtrafName ,time}) {
+	const {Image ,Name} = users;
+	const [clz, setClz] = useState("bg-light pt-2 row my-4")
+	const winLock=()=>{
+		window.location.href = `/my-shtraf/${id}`;
+		setClz("pt-2 row my-4")
+	}
 	return (
-		<div className="row my-4" id="nat-n">
+		<Link onClick={()=> winLock()} to={`/my-shtraf/${id}`} className={clz} id="nat-n">
 			<div className="col-3">
-				<img src={src === null? 'images/drivers/no-foto.jpg': src} className="" alt="" />
+				<img src={Image === null? 'images/drivers/no-foto.jpg': Image} className="" alt="" />
 			</div>
 			<div className="col-6 px-1">
-				<h6>{name} {soName}</h6>
+				<h6>{Name}</h6>
 				<h6>
 					<span>{shtrafName}</span>
 				</h6>
@@ -66,6 +64,6 @@ function Nat({src ,name, soName ,shtrafName ,time}) {
 				</svg>
 				<small>{time} мин</small>
 			</div>
-		</div>
+		</Link>
 	)
 }

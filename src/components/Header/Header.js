@@ -12,19 +12,30 @@ const initialState = {
 }
 
 const Header=()=>{
-
 	const [state, setState] = useState(initialState);
 	const {persDrop, natiDrop, NatificationArr,fx} = state;
 
 	useEffect(() => {
 		function getNatifications(){
 			api.get('/notifications')
-				.then(res=>{
-					const natification = res.data.notifications.reverse().slice(0,3)
+				.then(res=>{	
+					let {customers,notifications} = res.data;
+
+					notifications.map(item=>{
+						for (let i = 0; i < customers.length; i++) {
+							if(customers[i].ID === item.CustomerID){
+								item.Customer = customers[i];
+								break
+							}
+						}
+						return item
+					})
+
+					const natification = notifications.reverse().slice(0,3)
 					setState({...state, NatificationArr: natification})
 					
 				})
-				.catch(rej =>{})
+				.catch(rej =>{console.log(rej)})
 		}
 		getNatifications()
 	}, [])
@@ -54,7 +65,9 @@ const Header=()=>{
 
 	let persDropStyle = "d-none";
 	let persNatStyle = "d-none";
-	let Natifications = NatificationArr.map(item => <Natification  uId={item.CustomerID} bId={item.BID} key={item.ID}/>);
+	let Natifications = NatificationArr.map(item =>{
+		return <Natification user={item.Customer}  uId={item.CustomerID} bId={item.BID} key={item.ID}/>
+	});
 	if(persDrop){
 		persDropStyle = "";
 	}
@@ -69,7 +82,7 @@ const Header=()=>{
 				</Link>
 				<div className=" d-flex">
 					<div className="notification-wrapper mr-2">
-						<div className="notification c-p" onClick={onNatif}>
+						<div className="notification c-p mt-2" onClick={onNatif}>
 							<svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M14.25 6.33331C14.25 5.07353 13.7496 3.86535 12.8588 2.97456C11.968 2.08376 10.7598 1.58331 9.5 1.58331C8.24022 1.58331 7.03204 2.08376 6.14124 2.97456C5.25045 3.86535 4.75 5.07353 4.75 6.33331C4.75 11.875 2.375 13.4583 2.375 13.4583H16.625C16.625 13.4583 14.25 11.875 14.25 6.33331Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 							<path d="M10.8696 16.625C10.7304 16.8649 10.5306 17.0641 10.2903 17.2025C10.0499 17.341 9.7774 17.4139 9.50002 17.4139C9.22263 17.4139 8.95012 17.341 8.70975 17.2025C8.46939 17.0641 8.26962 16.8649 8.13043 16.625" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -113,13 +126,13 @@ const Header=()=>{
 								</Link>
 							</div>
 							<div className="adminlinks">
-								<a href="" className="mt-3">
+								<Link to="/edit-profile" className="mt-3">
 									<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path d="M16.6666 17.5V15.8333C16.6666 14.9493 16.3154 14.1014 15.6903 13.4763C15.0652 12.8512 14.2173 12.5 13.3333 12.5H6.66658C5.78253 12.5 4.93468 12.8512 4.30956 13.4763C3.68444 14.1014 3.33325 14.9493 3.33325 15.8333V17.5" stroke="black" strokeOpacity="0.5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 										<path d="M10.0001 9.16667C11.841 9.16667 13.3334 7.67428 13.3334 5.83333C13.3334 3.99238 11.841 2.5 10.0001 2.5C8.15913 2.5 6.66675 3.99238 6.66675 5.83333C6.66675 7.67428 8.15913 9.16667 10.0001 9.16667Z" stroke="black" strokeOpacity="0.5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 									</svg>
 									<span>Профиль</span>
-								</a>
+								</Link>
 							</div>	
 						</div>	
 					</div>
@@ -128,4 +141,5 @@ const Header=()=>{
 		</header>
 	)
 }
-export default Header
+
+export default Header;
