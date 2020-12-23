@@ -109,7 +109,7 @@ export default function Natification(props) {
     const [statePh, setVPh] = useState(initiaVPh);
     const [state, setState] = useState(initialState(props, setVPh))
 
-    
+
     const { notifications, loading, columns, config } = state;
     const { imageViol, imageShow } = statePh;
 
@@ -144,20 +144,20 @@ export default function Natification(props) {
                 ) : imageShow ? (
                     <ImageShtraf violation={imageViol} onClose={() => setVPh(prevState => ({ ...prevState, imageShow: false }))} />
                 ) : (
-                            <Layout component={() => {
-                                return (
-                                    <div className="col-md-10 mt-4 mb-4" id="Natification">
-                                        <div>
-                                            <h1>Уведомления</h1>
-                                            <ReactDatatable
-                                                config={config}
-                                                records={notifications}
-                                                columns={columns} />
-                                        </div>
+                        <Layout component={() => {
+                            return (
+                                <div className="col-md-10 mt-4 mb-4" id="Natification">
+                                    <div>
+                                        <h1>Уведомления</h1>
+                                        <ReactDatatable
+                                            config={config}
+                                            records={notifications}
+                                            columns={columns} />
                                     </div>
-                                )
-                            }} />
-                        )
+                                </div>
+                            )
+                        }} />
+                    )
             }
         </>
     )

@@ -11,7 +11,7 @@ const Payment = props =>{
   const buttons = buttonss.map(({name, label})=>{
     const isActive = filter === name;
     const clazz = isActive ? "Active":"notActive";
-    return <button type="button" className={`btn ${clazz}`} key={name} onClick={()=> onFilter(name)}>{label}</button>
+    return <button type="button" className={`btn ${clazz}`} key={name} onClick={()=> onFilter(name, "pay")}>{label}</button>
   });
   return (
     <div className="btn-group" id="Payment">
