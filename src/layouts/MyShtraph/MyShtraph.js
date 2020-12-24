@@ -160,7 +160,7 @@ const MyShtraph = ({id}) => {
 				) : imageShow ? (
 					<>
 						<ImageShtraf violation={imageViolation} onClose={() => setPhState(prevState => ({...prevState, imageShow: false})) }/>
-					</>//
+					</>
 				):(  
 					<> 	
 						<Layout component={()=>{

@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import React, { useEffect, useState } from 'react';
 import './Natification.css';
 import Layout from '../../components/Layout/Layout';
@@ -9,10 +10,20 @@ import NumberAuto from './NumberAuto/NumberAuto';
 import Violation from './Violation/Violation';
 import ImageShtraf from '../../components/ImageShtraf/ImageShtraf';
 
-const initialState = (props, setStatePhoto) => ({
+const initialState = {
     loading: true,
     notifications: [],
-    columns: [
+    imageViol: null,
+    imageShow: false,
+    
+}
+
+
+export default function Natification() {
+
+    const [state, setState] = useState(initialState)
+
+    const columns = [
         {
             key: "CustomerID",
             align: "center",
@@ -55,10 +66,18 @@ const initialState = (props, setStatePhoto) => ({
             cell: (key) => {
                 const handleImage = (viol) => {
 
-                    api.get(`/customer/${key.CustomerID}/violation/${key.BID}`)
+                    api.get(`/customer/${key.CustomerID}/violation/${key.BID}?real=1`)
                         .then(res => {
                             const { violation } = res.data;
-                            setStatePhoto(prevState => ({ ...prevState, imageViol: violation, imageShow: true }))
+                            setState(prevState => {
+                                prevState.notifications.map(o=>{
+                                    if(key.ID == o.ID)
+                                        o.Status=0;
+                                    return o
+                                });
+                                
+                                return { ...prevState, imageViol: violation, imageShow: true }
+                            });
                         })
                         .catch(rej => { console.log(rej); })
                 }
@@ -72,8 +91,8 @@ const initialState = (props, setStatePhoto) => ({
                 );
             }
         }
-    ],
-    config: {
+    ];
+    const config = {
         page_size: 10,
         length_menu: [10, 20, 30],
         show_filter: false,
@@ -94,27 +113,15 @@ const initialState = (props, setStatePhoto) => ({
                 last: "Last"
             }
         }
-    }
-})
-
-const initiaVPh = {
-    imageViol: null,
-    imageShow: false,
-}
+    };
 
 
-export default function Natification(props) {
+    const { notifications, loading, imageViol, imageShow} = state;
 
-    const [statePh, setVPh] = useState(initiaVPh);
-    const [state, setState] = useState(initialState(props, setVPh))
-
-
-    const { notifications, loading, columns, config } = state;
-    const { imageViol, imageShow, tableLoad } = statePh;
 
     useEffect(() => {
        const getNatification = () => {
-            api.get('/notifications')
+            api.get('/notifications?page=1&pagesize=1000')
                 .then(res => {
 
                     const { customers, notifications } = res.data;
@@ -141,7 +148,7 @@ export default function Natification(props) {
                 (loading) ? (
                     <Loader />
                 ) : imageShow ? (
-                    <ImageShtraf violation={imageViol} onClose={() => setVPh(prevState => ({ ...prevState, imageShow: false }))} />
+                    <ImageShtraf violation={imageViol} onClose={() => setState(prevState => ({ ...prevState, imageShow: false }))} />
                 ) : (
                         <Layout component={() => {
                             return (

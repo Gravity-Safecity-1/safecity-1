@@ -4,57 +4,50 @@ import api from '../../../api/index';
 import {Link} from 'react-router-dom';
 
 const initialState = {
-	time: null,
-	Vdesc: null,
+	violation: {},
+
 } 
 
-export default function Natification(props) {
+export default function Natification({notification}) {
+
+	
 	const [state, setState] = useState(initialState)
-	const {time, Vdesc} = state
+	const {violation} = state
+
+	const violDate = new Date(state.violation.VTime);
+	const violTime = `${violDate.getDate()}.0${violDate.getMonth()+1}.${violDate.getFullYear()} ${violDate.getHours()}:${violDate.getMinutes()}`
 	useEffect(() => {
-		function getNat(){
-			api.get(`customer/${props.uId}/violation/${props.bId}`)
+		const  getNat = () => {
+			api.get(`customer/${notification.UserID}/violation/${notification.BID}`)
 				.then(res=>{
-					const natification = res.data.violation;
-					let At = Date.parse(new Date()) - Date.parse(natification.VTime);
+					console.log(res);
+					const violation = res.data.violation;
+					console.log(violation);
 					setState(prevState=>({
 						...prevState,
-						time: At,
-						Vdesc: natification.VDescription
+						violation
 					}))
 				})
-				.catch(rej=>{
-					console.log(rej)
-				})
+				.catch(rej=>{console.log(rej)});
 		}
 		getNat()
-	}, [])
+	}, [notification])
 
+	
+	/* const [clz, setClz] = useState("bg-light pt-2 row my-4")
+
+	const winLock=()=>{window.location.href = `/my-shtraf/${notification.CustomerID}`;
+	setClz("pt-2 row my-4")
+	} */
 	return (
-		<>
-			<Nat id={props.uId} users={props.user} shtrafName={Vdesc} time={time}  />
-		</>
-	)
-}
-
-
-
-function Nat({users ,id, shtrafName ,time}) {
-	const {Image ,Name} = users;
-	const [clz, setClz] = useState("bg-light pt-2 row my-4")
-	const winLock=()=>{
-		window.location.href = `/my-shtraf/${id}`;
-		setClz("pt-2 row my-4")
-	}
-	return (
-		<Link onClick={()=> winLock()} to={`/my-shtraf/${id}`} className={clz} id="nat-n">
+		<Link  to={`/my-shtraf/${notification.CustomerID}`} className={"clz pt-2 row my-4"} id="nat-n">
 			<div className="col-3">
-				<img src={Image === null? 'images/drivers/no-foto.jpg': Image} className="" alt="" />
+				<img src={notification.Customer.Image === null? 'images/drivers/no-foto.jpg': notification.Customer.Image} className="" alt="" />
 			</div>
 			<div className="col-6 px-1">
-				<h6>{Name}</h6>
+				<h6>{notification.Customer.Name}</h6>
 				<h6>
-					<span>{shtrafName}</span>
+					<span>{violation.VDescription}</span>
 				</h6>
 			</div>
 			<div className="col-3">
@@ -62,7 +55,7 @@ function Nat({users ,id, shtrafName ,time}) {
 				<path d="M5.00016 9.16668C7.30135 9.16668 9.16683 7.3012 9.16683 5.00001C9.16683 2.69882 7.30135 0.833344 5.00016 0.833344C2.69898 0.833344 0.833496 2.69882 0.833496 5.00001C0.833496 7.3012 2.69898 9.16668 5.00016 9.16668Z" stroke="black" strokeOpacity="0.5" strokeLinecap="round" strokeLinejoin="round"/>
 				<path d="M5 2.5V5L6.66667 5.83333" stroke="black" strokeOpacity="0.5" strokeLinecap="round" strokeLinejoin="round"/>
 				</svg>
-				<small>{time} мин</small>
+				<small>{violTime}</small>
 			</div>
 		</Link>
 	)
