@@ -3,12 +3,12 @@ import api from '../../../api/index';
 
 const initialState = {
 	num: null,
-	violetionId: null
+	violetionId: null,
 }
 
 export default function Violation({status, idx,bid}) {
 	const [state, setState] = useState(initialState)
-	const {num, violetionId} = state
+	const {num, violetionId} = state;
 
 	useEffect(() => {
 		function getVioletion(){
@@ -17,8 +17,9 @@ export default function Violation({status, idx,bid}) {
 					const {VDescription, VId} = res.data.violation;
 					setState({ 
 						num: VDescription,
-						violetionId: VId
+						violetionId: VId,
 					})
+					
 				})
 				.catch(rej=>{
 					console.log(rej)
@@ -26,7 +27,7 @@ export default function Violation({status, idx,bid}) {
 		}
 		getVioletion()	
 	}, [])
-
+	
 	return (
 		<div className="d-flex align-items-center">
 			<Cont status={status === 1 ? "font-weight-bold" : "" } num={num} url={violetionId}/>

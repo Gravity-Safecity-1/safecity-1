@@ -7,7 +7,6 @@ import ReactDatatable from '@ashvin27/react-datatable';
 import DriversInfo from './Drivers/Drivers';
 import NumberAuto from './NumberAuto/NumberAuto';
 import Violation from './Violation/Violation';
-import { Link } from 'react-router-dom';
 import ImageShtraf from '../../components/ImageShtraf/ImageShtraf';
 
 const initialState = (props, setStatePhoto) => ({
@@ -45,7 +44,7 @@ const initialState = (props, setStatePhoto) => ({
             cell: (row) => {
                 return (
                     <>
-                        <Violation status={row.Status} idx={row.CustomerID} bid={row.BID} />
+                        <Violation reqYes={200} status={row.Status} idx={row.CustomerID} bid={row.BID} />
                     </>
                 )
             }
@@ -100,7 +99,7 @@ const initialState = (props, setStatePhoto) => ({
 
 const initiaVPh = {
     imageViol: null,
-    imageShow: false
+    imageShow: false,
 }
 
 
@@ -111,13 +110,13 @@ export default function Natification(props) {
 
 
     const { notifications, loading, columns, config } = state;
-    const { imageViol, imageShow } = statePh;
+    const { imageViol, imageShow, tableLoad } = statePh;
 
     useEffect(() => {
        const getNatification = () => {
             api.get('/notifications')
                 .then(res => {
-                    console.log(res);
+
                     const { customers, notifications } = res.data;
                     notifications.map(item => {
                         for (let i = 0; i < customers.length; i++) {
