@@ -108,16 +108,16 @@ const Header=()=>{
 					</div>
 					<div className="user-wrapper ml-4">
 						<div className="user c-p" onClick={onPers} >
-							<img src="images/users/user.png" alt="" />
+							<img src="images/drivers/no-foto.jpg"  alt="" />
 						</div>
 						<div id="persDrop" className={persDropStyle} onMouseLeave={()=>setState({...state, persDrop: false})}>
 							<div className="d-flex align-items-center admin" >
 								<b onClick={onClosePers}>x</b>
 								<div className="mr-3">
-									<img src="images/users/user-2.png" alt="" />
+									<img src="images/drivers/no-foto.jpg" alt="" />
 								</div>
 								<span>Админ</span>
-								<Link to="/login" className="d-block ml-4 pl-3">
+								<Link to="/login" style={{cursor: "alias"}} className="d-block ml-4 pl-3">
 									<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path d="M7.5 17.5H4.16667C3.72464 17.5 3.30072 17.3244 2.98816 17.0118C2.67559 16.6993 2.5 16.2754 2.5 15.8333V4.16667C2.5 3.72464 2.67559 3.30072 2.98816 2.98816C3.30072 2.67559 3.72464 2.5 4.16667 2.5H7.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 										<path d="M13.3333 14.1666L17.4999 9.99998L13.3333 5.83331" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -126,7 +126,7 @@ const Header=()=>{
 								</Link>
 							</div>
 							<div className="adminlinks">
-								<Link to="/edit-profile" className="mt-3">
+								<Link  to="/edit-profile" className="mt-3">
 									<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path d="M16.6666 17.5V15.8333C16.6666 14.9493 16.3154 14.1014 15.6903 13.4763C15.0652 12.8512 14.2173 12.5 13.3333 12.5H6.66658C5.78253 12.5 4.93468 12.8512 4.30956 13.4763C3.68444 14.1014 3.33325 14.9493 3.33325 15.8333V17.5" stroke="black" strokeOpacity="0.5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 										<path d="M10.0001 9.16667C11.841 9.16667 13.3334 7.67428 13.3334 5.83333C13.3334 3.99238 11.841 2.5 10.0001 2.5C8.15913 2.5 6.66675 3.99238 6.66675 5.83333C6.66675 7.67428 8.15913 9.16667 10.0001 9.16667Z" stroke="black" strokeOpacity="0.5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>

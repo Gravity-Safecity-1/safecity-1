@@ -38,6 +38,7 @@ const MyShtraph = ({id}) => {
 	const [phstate, setPhState] = useState(inStatePh);
 
 	const { viol, payment, status, itemsFiltered,itemsAll, customer }= state;
+
 	const { loading, currentPage, postsPerPage } = state;
 
 	console.log(state);
@@ -74,12 +75,11 @@ const MyShtraph = ({id}) => {
 		itemsAll.map(o =>{
 			let item = fS(fP(fV(o, viol),payment), status);
 
-			//console.log(item);
-
 			item && itemsFiltered.push(item);
 
 			return o;
 		});
+
 		setState(prevState => ({...prevState, itemsFiltered, viol, payment, status, currentPage:1}));
 		
 		return itemsFiltered;
@@ -103,6 +103,7 @@ const MyShtraph = ({id}) => {
 		}
 		return null;
 	}
+	
 	const fS = (item, s)=>{
 		if ((s=='ver' && item?.ProcessStatus == 1) ||
 		(s=='notVer' && item?.ProcessStatus !== 1) ||
@@ -112,63 +113,11 @@ const MyShtraph = ({id}) => {
 		return null;
 	}
 
-
-
-	/* 
-	useEffect(() => {
-		let s = [];
-		if(filter === "stopLine"){
-			s = itemsArr2.filter(item => item.VId === "1345" || item.VId === "1625");
-		}else if( filter === 'redColor'  ){
-			s = itemsArr2.filter(item => item.VId === "1302");
-		}else if(filter === 'line'){
-			s = itemsArr2.filter(item => item.VId === "1230");
-		}else if(filter === 'againts'){
-			s = itemsArr2.filter(item => item.VId === "1301");
-		}else{
-			s = itemsArr2
-		}
-		setState( prevState => ({...prevState, itemsArr: s}) )
-
-	}, [filter]);
-
-	useEffect(() => {
-		let s = [];
-		if(payment === 'yes'){
-			s = itemsArr2.filter(item => item.IsPaid === 1);
-		}else if(payment === 'no'){
-			s = itemsArr2.filter(item => item.IsPaid === 0);
-		}else{
-			s = itemsArr2
-		}
-		setState(prevState => ({...prevState, itemsArr:s }) )
-		
-	}, [payment]);
-
-	useEffect(() => {
-		let s = [];
-		if(status === 'ver'){
-			s = itemsArr2.filter(item => item.ProcessStatus == 1);
-		}else if(status === 'notVer'){
-			s = itemsArr2.filter(item => item.ProcessStatus > 1);
-		}else{
-			s = itemsArr2;
-		}
-		setState(prevState => ({...prevState, itemsArr: s}) )
-
-	}, [status])
-
- */
 	const handleImage = (violation)=>{
 		setPhState(prevState => {
 			return {...prevState, imageViolation:violation, imageShow:true}
 		});
-
-		//console.log(state);
-		//console.log(phstate);
 	}
-	
-
 	
 	//auto elements
 	const verSh = itemsAll.filter(item => item.ProcessStatus === 1).length;
@@ -180,8 +129,8 @@ const MyShtraph = ({id}) => {
 	const indexOfFirstPost = indexOfLastPost - postsPerPage; 
 	const currentPosts = itemsFiltered.slice(indexOfFirstPost, indexOfLastPost);
 	const pageN = Math.ceil(itemsFiltered.length/postsPerPage);
-
-
+    
+    //filter
 	const handleFilter = (fil, name)=>{
 		// eslint-disable-next-line default-case
 		switch (name) {
@@ -195,19 +144,14 @@ const MyShtraph = ({id}) => {
 				setFilter(state.viol, state.payment, fil, state.itemsAll);
 				break;
 		}
-		
 	}
 
 	// arr user shtraf
-	let ItemsEl = currentPosts.map(item =>{
-		return(
-			<Items handleImage={handleImage} idPer={()=> setState({...state, IdImg: item.BId})} violation={item} noData={false} key={item.ID}/>
-		)
-	})
+	let ItemsEl = currentPosts.map(item => <Items handleImage={handleImage} idPer={()=> setState({...state, IdImg: item.BId})} violation={item} noData={false} key={item.ID}/> )
+
 	if(currentPosts.length <= 0){
 		ItemsEl = <Items noData={true}/>
-	}
-
+	} 
 	return (
 		<> 
 			{
@@ -215,10 +159,10 @@ const MyShtraph = ({id}) => {
 					<Loader/>
 				) : imageShow ? (
 					<>
-					<ImageShtraf violation={imageViolation} onClose={() => setPhState(prevState => ({...prevState, imageShow: false})) }/>
-					</>
-				):  (  
-					<>				
+						<ImageShtraf violation={imageViolation} onClose={() => setPhState(prevState => ({...prevState, imageShow: false})) }/>
+					</>//
+				):(  
+					<> 	
 						<Layout component={()=>{
 							return(
 								<div id="MyShtraph" className="col-md-10 my-4">

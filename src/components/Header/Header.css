@@ -36,6 +36,15 @@
 #Header .user-wrapper .user{
 	position: relative;
 }
+#Header .user-wrapper .user img{
+	width: 38px;
+	height: 38px;
+	border-radius: 50%;
+	border: 1px solid #005395;
+}
+#Header .user-wrapper .user img:hover{
+	border-color: black;
+}
 #Header .user-wrapper .user .not_badge{
 	background: #7AD835;
 	border-radius: 100%;
@@ -59,6 +68,11 @@
 	right: 0px;
 	top: 45px;
 	z-index: 8
+}
+#Header .user-wrapper #persDrop img{
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
 }
 
 #Header .user-wrapper #persDrop .admin{
@@ -99,6 +113,7 @@
 	text-decoration: none;
 }
 #Header .user-wrapper #persDrop .adminlinks a:hover path{
+	stroke-opacity: 1;
 	stroke: #005395
 }
 #Header .user-wrapper #persDrop .adminlinks a span{

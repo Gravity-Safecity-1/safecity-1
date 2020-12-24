@@ -7,7 +7,6 @@ import Natification from '../layouts/Natification/Natification';
 import Contacts from '../layouts/Contacts/Contacts';
 import EditProfile from '../layouts/EditProfile/EditProfile';
 import Sabscription from '../layouts/Sabscription/Sabscription';
-import ImageShtraf from '../components/ImageShtraf/ImageShtraf';
 import {Route, Switch,Redirect, Link} from 'react-router-dom'
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
 
@@ -25,7 +24,6 @@ export default function Wrapper() {
 						)
 					}
 				} />
-				<Route path="/img" exact component={ImageShtraf}/>
 				<ProtectedRoute path="/" exact component={Home}/>
 				<ProtectedRoute path="/natification" exact component={Natification}/>
 				<ProtectedRoute path="/contacts" exact component={Contacts}/>
