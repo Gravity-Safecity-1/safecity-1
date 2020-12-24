@@ -84,7 +84,6 @@ const initialState = (props) => ({
         align: "center",
         text: "ОПОВЕЩЕНИЕ",
         cell: (row) => {
-
             //console.log(row);
             const handleChange = event => {
                 console.log(event);

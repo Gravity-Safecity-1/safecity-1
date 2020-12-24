@@ -6,7 +6,7 @@ const initialState = {
 	violetionId: null
 }
 
-export default function Violation({idx,bid}) {
+export default function Violation({status, idx,bid}) {
 	const [state, setState] = useState(initialState)
 	const {num, violetionId} = state
 
@@ -29,12 +29,12 @@ export default function Violation({idx,bid}) {
 
 	return (
 		<div className="d-flex align-items-center">
-			<Cont num={num} url={violetionId}/>
+			<Cont status={status === 1 ? "font-weight-bold" : "" } num={num} url={violetionId}/>
 		</div>
 	)
 }
 
-const Cont = ({num, url}) =>{
+const Cont = ({status,num, url}) =>{
 	let r = (s)=>{
 		switch(s){ 
 				case "1625": return "images/type-shtraf/straf-2.png";
@@ -48,7 +48,7 @@ const Cont = ({num, url}) =>{
 	return(
 		<>
 			<div className="mr-2"><img src={r(url)} alt="" /></div>
-			{num}
+			<span className={status}>{num}</span>
 		</>
 	)
 }

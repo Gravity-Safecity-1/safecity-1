@@ -21,7 +21,7 @@ const initialState = (props, setStatePhoto) => ({
             cell: (row) => {
                 return (
                     <>
-                        <DriversInfo customer={row.Customer} />
+                        <DriversInfo status={row.Status} customer={row.Customer} />
                     </>
                 )
             }
@@ -33,7 +33,7 @@ const initialState = (props, setStatePhoto) => ({
             text: "НОМЕР АВТО",
             cell: (row) => {
                 return (
-                    <NumberAuto vehiclePlate={row.Customer.VehiclePlate} />
+                    <NumberAuto status={row.Status} vehiclePlate={row.Customer.VehiclePlate} />
                 )
             }
 
@@ -45,7 +45,7 @@ const initialState = (props, setStatePhoto) => ({
             cell: (row) => {
                 return (
                     <>
-                        <Violation idx={row.CustomerID} bid={row.BID} />
+                        <Violation status={row.Status} idx={row.CustomerID} bid={row.BID} />
                     </>
                 )
             }
