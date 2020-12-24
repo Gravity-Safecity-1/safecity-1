@@ -68,3 +68,6 @@
 	vertical-align: middle;
 	text-align: center;
 }
+#Natification .form-control{
+	border-radius: 2px
+}
