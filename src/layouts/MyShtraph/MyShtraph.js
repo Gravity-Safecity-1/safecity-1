@@ -57,7 +57,11 @@ const MyShtraph = ({id}) => {
 						loading: false
 					}));
 					
-				});
+				})
+				.catch(rej=>{
+					console.log(rej)
+					window.location.href = '/worning';
+				})
 		};
 
 		getItems();

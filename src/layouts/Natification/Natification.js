@@ -131,7 +131,10 @@ export default function Natification() {
                     })
                     setState(pState => ({ ...pState, notifications, loading: false }))
                 })
-                .catch(rej => {})
+                .catch(rej => {
+                    console.log(rej)
+                    window.location.href = '/worning';
+                })
         }
         getNatification()
 

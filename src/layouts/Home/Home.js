@@ -94,6 +94,7 @@ const initialState = (props) => ({
                     })
                     .catch(rej => {
                         console.log(rej);
+                        window.location.href = '/worning';
                     })
             }
             return (

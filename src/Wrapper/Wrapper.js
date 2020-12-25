@@ -9,6 +9,7 @@ import EditProfile from '../layouts/EditProfile/EditProfile';
 import Sabscription from '../layouts/Sabscription/Sabscription';
 import {Route, Switch,Redirect, Link} from 'react-router-dom'
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
+import Worning from '../components/Worning/Worning';
 
 export default function Wrapper() {
 	return (
@@ -29,6 +30,8 @@ export default function Wrapper() {
 				<ProtectedRoute path="/contacts" exact component={Contacts}/>
 				<ProtectedRoute path="/subscription" exact component={Sabscription}/>
 				<ProtectedRoute path="/edit-profile" exact component={EditProfile}/>
+				<ProtectedRoute path="/worning" exact component={Worning}/>
+				<Route path="/worning" exact component={Worning}/>
 				<Redirect  to="/" />
 			</Switch>
 		</div>
