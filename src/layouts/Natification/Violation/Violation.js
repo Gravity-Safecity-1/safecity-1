@@ -33,7 +33,7 @@ export default function Violation({status, idx,bid}) {
 			<Cont status={status === 1 ? "font-weight-bold" : "" } num={num} url={violetionId}/>
 		</div>
 	)
-}
+}//
 
 const Cont = ({status,num, url}) =>{
 	let r = (s)=>{

@@ -37,16 +37,10 @@ const MyShtraph = ({id}) => {
 	const [state, setState] = useState(initialState);
 	const [phstate, setPhState] = useState(inStatePh);
 
-	const { viol, payment, status, itemsFiltered,itemsAll, customer }= state;
-
-	const { loading, currentPage, postsPerPage } = state;
-
-	console.log(state);
-
+	const { viol, payment, status, itemsFiltered,itemsAll, customer, loading, currentPage, postsPerPage }= state;
 	const {imageViolation, imageShow} = phstate;
 
 	useEffect(() => {
-
 		const getItems = ()=>{
 			api.get(`/customer/${id}?page=1&pagesize=500`)
 				.then(res =>{
@@ -74,12 +68,9 @@ const MyShtraph = ({id}) => {
 		let itemsFiltered=[];
 		itemsAll.map(o =>{
 			let item = fS(fP(fV(o, viol),payment), status);
-
 			item && itemsFiltered.push(item);
-
 			return o;
 		});
-
 		setState(prevState => ({...prevState, itemsFiltered, viol, payment, status, currentPage:1}));
 		
 		return itemsFiltered;
@@ -132,7 +123,6 @@ const MyShtraph = ({id}) => {
     
     //filter
 	const handleFilter = (fil, name)=>{
-		// eslint-disable-next-line default-case
 		switch (name) {
 			case 'viol':
 				setFilter(fil, state.payment, state.status, state.itemsAll);

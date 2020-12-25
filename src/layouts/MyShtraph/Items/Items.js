@@ -14,10 +14,8 @@ export default function Items({ violation, noData, handleImage, idPer }) {
 		}
 	}
 	const onhandleImage = () =>{
-		
 		return handleImage(violation);
 	}
-
 
 	return (noData) ? (
 		<tr>

@@ -18,10 +18,9 @@ const initialState = {
     
 }
 
-
 export default function Natification() {
-
     const [state, setState] = useState(initialState)
+    const { notifications, loading, imageViol, imageShow} = state;
 
     const columns = [
         {
@@ -114,10 +113,6 @@ export default function Natification() {
             }
         }
     };
-
-
-    const { notifications, loading, imageViol, imageShow} = state;
-
 
     useEffect(() => {
        const getNatification = () => {

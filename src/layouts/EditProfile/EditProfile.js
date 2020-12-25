@@ -3,11 +3,26 @@ import './EditProfile.css';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
 import {Link} from 'react-router-dom';
+import api from '../../api/index';
+
+const initialState ={
+	loading: true,
+	name: ""
+}
 
 export default function EditProfile() {
-	const [loading, setLoading] = useState(true)
+	const [state, setState] = useState(initialState)
+	const {loading, name} = state
+
 	useEffect(() => {
-		setLoading(false)
+		api.get('/profile')
+			.then(res=>{
+				const {user} = res.data;
+				setState({ name: user.Name, loading: false})
+			})
+			.catch(rej=>{
+				console.log(rej)
+			})
 	}, [])
 	return (
 		<>{
@@ -27,7 +42,7 @@ export default function EditProfile() {
 									</div>
 									<div className="col-lg-4 co-md-6 col-12">
 										<div className="adminInfo">
-											<h2>Админ Админов</h2>
+											<h2>{name}</h2>
 											<p>Телефон <span className="d-inline-block ml-4 pl-2">+992 935452332</span></p>
 										</div>
 									</div>

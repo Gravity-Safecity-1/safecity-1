@@ -27,7 +27,7 @@ const initialState = (props) => ({
                 </div>
             )
         }
-    },
+    },//
     {
         key: "VehiclePlate",
         align: "center",
@@ -145,21 +145,11 @@ const initialState = (props) => ({
             }
         }
     },
-}
-)
-
+})
 
 function Home(props) {
-
-
     const [state, setState] = useState(initialState(props))
-
-    const { loading } = state;
-    const { config } = state;
-    const { items } = state;
-    const { columns } = state;
-
-
+    const { loading, columns, items, config } = state;
 
     useEffect(() => {
         const getData = () => {
@@ -178,8 +168,6 @@ function Home(props) {
         }
         getData();
     }, [])
-
-
 
     return (loading) ? (
         <Loader />

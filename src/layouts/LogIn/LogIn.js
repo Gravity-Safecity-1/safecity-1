@@ -2,7 +2,6 @@
 import React, {useState} from 'react';
 import './LogIn.css';
 import { Link, Redirect } from 'react-router-dom';
-
 import {HOME} from '../../routes'
 import api from '../../api'
 import{setToken, setUser, removeToken, removeUser, } from '../../utils'
@@ -34,8 +33,6 @@ function LogIn() {
 		  }));
 	}
 	const handleSubmit = async (e) =>{
-		console.log(usr);
-
 		try {
 			const res  = await api.post("/auth", {"login":usr.login, "password":usr.password})
 
