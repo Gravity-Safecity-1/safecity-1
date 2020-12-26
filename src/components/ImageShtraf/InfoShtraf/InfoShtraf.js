@@ -8,8 +8,8 @@ export default function InfoShtraf({violation}) {
 	const violLocationArr = violation.VLocation.split("")
 	const violLocatNum = violLocationArr.slice(0,2).join("");
 	const violLocationName = violLocationArr.slice(2 , violLocationArr.length).join("");
-	const violLocationWrap = violLocationName +"  "+ violLocatNum
-	console.log(violation)
+	const violLocationWrap = violLocationName +"  "+ violLocatNum;
+	
 	return (
 		<div className="InfoShtraf">
 			<p className="mr-5 d-flex align-items-center">

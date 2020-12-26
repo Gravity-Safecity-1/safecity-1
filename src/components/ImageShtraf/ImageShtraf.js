@@ -19,7 +19,6 @@ const ImageShtraf = ({ onClose, violation }) => {
     const {images, loading} = state;
 
     useEffect(() => {
-
         let pin = '4698$p0ytAkht';
         let username = 'poytakht';
         let text = 'info';
@@ -29,25 +28,24 @@ const ImageShtraf = ({ onClose, violation }) => {
         const getViol = () => {
             api.get(url, { crossdomain: true })
                 .then(res => {
-                    console.log(res.data);
-
 
                     let rows = (new DOMParser()).parseFromString(res.data, "text/xml").getElementsByTagName("row");
                     let arrImg = [];
                     for (let i = 0; i < rows.length; i++) {
                         arrImg.push(rows[i].getAttribute('url'))
                     }
-                    //console.log(arrImg);
 
+                    let key = 'urlSrcImage'
+                    localStorage.setItem(key, JSON.stringify(arrImg))
+                    const keshImage = JSON.parse(localStorage.getItem(key))
                     setState(prevState => ({
                         ...prevState,
-                        images: arrImg,
+                        images: keshImage,
                         loading: false
                     }));
                     
                 })
                 .catch(rej => { })
-
         }
         getViol()
     }, [violation.BId])
