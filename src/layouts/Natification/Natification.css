@@ -17,8 +17,8 @@
 	text-align: left;
 }
 #Natification thead tr th{
-	font-size: 14px;
-	line-height: 16px;
+	font-size: 12px;
+	line-height: 14px;
 	border-bottom: 2px solid #E2E5E8;
 	border-top: 2px solid #E2E5E8;
 	text-align: center;
@@ -47,13 +47,13 @@
     border-color: #dee2e6;
 }
 #Natification h6{
-	font-size: 14px;
-	line-height: 16px;
+	font-size: 12px;
+	line-height: 14px;
 	margin-bottom: 	0px;
 }
 #Natification p{
-	font-size: 14px;
-	line-height: 16px;
+	font-size: 12px;
+	line-height: 14px;
 	color: rgba(0, 0, 0, 0.5);
 	margin-bottom: 0px;
 	display: flex;
@@ -67,7 +67,16 @@
 	border-bottom: 2px solid #E2E5E8;
 	vertical-align: middle;
 	text-align: center;
+	font-size: 12px;
+	line-height: 14px;
+	padding: .7rem
 }
 #Natification .form-control{
 	border-radius: 2px
+}
+#Natification .table-body#as-react-datatable-table-body{
+	overflow-x: auto;
+}
+#Natification .pagination {
+	flex-wrap: wrap;
 }

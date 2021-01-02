@@ -125,8 +125,8 @@ const initialState = (props) => ({
     }
     ],
     config: {
-        page_size: 10,
-        length_menu: [10, 20, 50],
+        page_size: 50,
+        length_menu: [50, 20, 10],
         show_filter: true,
         show_pagination: true,
         pagination: 'advance',

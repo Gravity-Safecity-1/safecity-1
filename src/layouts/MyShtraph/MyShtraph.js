@@ -191,6 +191,7 @@ const MyShtraph = ({id}) => {
 														  	<thead>
 														    	<tr>
 														    	  	<th scope="col">ТИП НАРУШЕНИЯ</th>
+														    	  	<th scope="col">АДРЕСС</th>
 														    	  	<th scope="col">ОПЛАТА</th>
 														    	  	<th scope="col">СТАТУС</th>
 														    	  	<th scope="col">ФОТО</th>

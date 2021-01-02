@@ -16,7 +16,13 @@ export default function Items({ violation, noData, handleImage, idPer }) {
 	const onhandleImage = () =>{
 		return handleImage(violation);
 	}
+	const violDate = new Date(violation.VTime);
+	const violTime = `${violDate.getDate()}.0${violDate.getMonth()+1}.${violDate.getFullYear()} ${violDate.getHours()}:${violDate.getMinutes()}:${violDate.getSeconds()}`
 
+	const violLocationArr = violation.VLocation.split("")
+	const violLocatNum = violLocationArr.slice(0,2).join("");
+	const violLocationName = violLocationArr.slice(2 , violLocationArr.length).join("");
+	const violLocationWrap = violLocationName +"  "+ violLocatNum;
 	return (noData) ? (
 		<tr>
 			<th>Нет штрафов</th>
@@ -33,6 +39,9 @@ export default function Items({ violation, noData, handleImage, idPer }) {
 						</div>
 						<span>{violation?.VDescription}</span>
 					</div>
+				</td>
+				<td>
+					<p>{violLocationWrap}<br/>{violTime}</p>
 				</td>
 				<td>
 					<p>{violation?.IsPaid === 0 ? 'Нет' : "Да"}</p>

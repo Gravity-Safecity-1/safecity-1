@@ -57,14 +57,14 @@ export default function Contacts() {
 								<span className="cont-def-span ml-2">Проверка штрафов ГАИ</span>
 
 								<div className="row my-5 pt-4 px-3 ">
-									<div className="col-md-4 col-sm-6 col-12">
+									<div className="col-md-4 col-sm-6 col-12 mt-4">
 										<div className="num socLink">
 											<p>Контакты:</p>
 											<a href="" className="d-block mb-2"><span className="cont-def-span">+992 918246924</span></a>
 											<a href="" className="d-block"><span className="cont-def-span">+992 931441244</span></a>
 										</div>	
 									</div>
-									<div className="col-md-4 col-sm-6 col-12">
+									<div className="col-md-4 col-sm-6 col-12 mt-4">
 										<div className="massaners socLink">
 											<p>социальные сети:</p>
 											<a href="" className="d-flex align-items-center">

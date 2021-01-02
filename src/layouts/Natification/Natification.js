@@ -92,8 +92,8 @@ export default function Natification() {
         }
     ];
     const config = {
-        page_size: 10,
-        length_menu: [10, 20, 30],
+        page_size: 30,
+        length_menu: [30, 10, 20,],
         show_filter: false,
         show_pagination: true,
         pagination: 'advance',
